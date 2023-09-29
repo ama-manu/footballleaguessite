@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
 
+import styles from './LeagueTable.module.scss'
+
 // async function fetchAsync(url) {
 //     try {
 //         let response = await fetch(url);
@@ -27,9 +29,6 @@ function FetchData() {
 
     return dbdata;
 }
-
-
-
 
 function LeagueTable() {
     const tempData = FetchData();
@@ -77,15 +76,16 @@ function LeagueTable() {
     // console.log(table.getHeaderGroups());
 
     return (
-        <table>
+        <table className={styles.table}>
             <thead>
                 {table.getHeaderGroups().map(headerGroup => (
                     <tr key={headerGroup.id}>
+                        <th className={styles.colouredCell}></th>
+                        <th></th>
                         {headerGroup.headers.map(header => (
                             <th key={header.id}>
                                 {flexRender(
-                                    header.column.columnDef.header,
-                                    header.getContext()
+                                    header.column.columnDef.header, header.getContext()
                                 )}
                             </th>
                         ))}
@@ -93,12 +93,13 @@ function LeagueTable() {
                 ))}
             </thead>
             <tbody>
-                {table.getRowModel().rows.map(row => (
+                {table.getRowModel().rows.map((row, rindex) => (
                     <tr key={row.id}>
+                        <td className={styles.colouredCell}></td>
+                        <td>{rindex + 1}</td>
                         {row.getVisibleCells().map(cell => (
                             <td key={cell.id}>
-                                {flexRender(cell.column.columnDef.cell,
-                                    cell.getContext()
+                                {flexRender(cell.column.columnDef.cell, cell.getContext()
                                 )}
                             </td>
                         ))}

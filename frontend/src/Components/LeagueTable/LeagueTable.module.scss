@@ -1,1 +1,87 @@
 @use '../../variables';
+
+.table {
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+
+    thead,
+    tbody tr td {
+        // border: 1px solid black;
+        padding: 8px;
+    }
+
+
+    // align text
+    tbody tr td {
+        text-align: center;
+    }
+
+    /*
+    tbody tr td:nth-child(1) {
+        text-align: left;
+    }
+
+    tbody tr td:nth-child(2) {
+        text-align: right;
+    }
+
+    tbody tr td:nth-child(n + 7):nth-child(-n + 8) {
+        text-align: right;
+    }
+    */
+    tbody tr td {
+        &:nth-child(3) {
+            text-align: left;
+        }
+
+        &:nth-child(4),
+        &:nth-child(9),
+        &:nth-child(10) {
+            text-align: right;
+        }
+    }
+
+    // colour placements (ucl, uel, uecl, relpo, rel
+    tbody tr {
+        // ucl
+        &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+            .colouredCell {
+                background-color: green;
+            }
+        }
+
+        // uel
+        &:nth-child(5) {
+            .colouredCell {
+                background-color: #4bcffc;
+            }
+        }
+
+        // uecl
+        &:nth-child(6) {
+            .colouredCell {
+                background-color: #8be2ff;
+            }
+        }
+
+        // relpo
+        &:nth-child(16) {
+            .colouredCell {
+                background-color: #ffbb00;
+            }
+        }
+
+        // rel
+        &:nth-child(17), &:nth-child(18) {
+            .colouredCell {
+                background-color: #df1616;
+            }
+        }
+    }
+
+    tbody tr .colouredCell {
+        width: 3px;
+        padding: 0;
+    }
+}

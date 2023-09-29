@@ -1,1 +1,11 @@
 @use '../variables';
+
+.base {
+    min-height: calc(100vh - 0vh);
+    width: calc(100vw - (100vw - 100%));
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: variables.$background-colour;
+}
