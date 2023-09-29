@@ -1,0 +1,10 @@
+@use '../../variables';
+
+.card {
+    background-color: variables.$main-colour;
+    padding: 1rem;
+    margin: 1rem;
+    border-radius: 3px;
+
+    filter: drop-shadow(1px 1px 1px #cacaca);
+}
