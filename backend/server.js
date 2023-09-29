@@ -2,6 +2,9 @@ const express = require("express");
 const app = express();
 
 const fetch = require("node-fetch-commonjs");
+const cors = require("cors");
+
+app.use(cors());
 
 var buli = undefined;
 
@@ -23,10 +26,12 @@ const url = "https://api.openligadb.de/getbltable/bl1/2023";
 })()
 
 app.get("/", (req, res) => {
+    res.send("<h1>test</h1>");
 })
 
 // send data on /api endpoint
 app.get("/api", (req, res) => {
+    // console.log(buli);
     res.send(buli);
 })
 
