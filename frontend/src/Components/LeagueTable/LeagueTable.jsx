@@ -30,6 +30,21 @@ function FetchData() {
     return dbdata;
 }
 
+function GoalDiffColour({ p }) {
+    var cname = '';
+    if (p.getContext().getValue() > 0 && p.getContext().column.id === "D") {
+        cname = styles.goalColourPos;
+    } else if (p.getContext().getValue() < 0 && p.getContext().column.id === "D") {
+        cname = styles.goalColourNeg;
+    }
+    return (
+        <td key={p.id} className={cname}>
+            {flexRender(p.column.columnDef.cell, p.getContext()
+            )}
+        </td>
+    )
+}
+
 function LeagueTable() {
     const tempData = FetchData();
     const data = tempData;
@@ -58,7 +73,8 @@ function LeagueTable() {
         },
         {
             header: 'Tore',
-            accessorKey: 'goals'
+            // accessorKey: 'goals'
+            accessorFn: (row => (row.goals + ":" + row.opponentGoals))
         },
         {
             header: 'D',
@@ -72,8 +88,6 @@ function LeagueTable() {
     ]
 
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
-
-    // console.log(table.getHeaderGroups());
 
     return (
         <table className={styles.table}>
@@ -98,10 +112,13 @@ function LeagueTable() {
                         <td className={styles.colouredCell}></td>
                         <td>{rindex + 1}</td>
                         {row.getVisibleCells().map(cell => (
-                            <td key={cell.id}>
-                                {flexRender(cell.column.columnDef.cell, cell.getContext()
-                                )}
-                            </td>
+                            // <td key={cell.id}>
+                            //     {flexRender(cell.column.columnDef.cell, cell.getContext()
+                            //     )}
+                            // </td>
+                            <GoalDiffColour
+                                p={cell}
+                            />
                         ))}
                     </tr>
                 ))}

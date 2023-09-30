@@ -4,35 +4,32 @@
     border-collapse: collapse;
     margin: 0;
     padding: 0;
+    
+    color: #7a7a7a;
+    background-color: white;
+
+    thead {
+        background-color: variables.$background-colour;
+        font-size: 85%;
+    }
 
     thead,
     tbody tr td {
         // border: 1px solid black;
-        padding: 8px;
+        padding: 0.75rem 1rem;
     }
 
 
     // align text
     tbody tr td {
         text-align: center;
+        white-space: nowrap;
     }
 
-    /*
-    tbody tr td:nth-child(1) {
-        text-align: left;
-    }
-
-    tbody tr td:nth-child(2) {
-        text-align: right;
-    }
-
-    tbody tr td:nth-child(n + 7):nth-child(-n + 8) {
-        text-align: right;
-    }
-    */
     tbody tr td {
         &:nth-child(3) {
             text-align: left;
+            width: 25rem;   
         }
 
         &:nth-child(4),
@@ -61,7 +58,7 @@
         // uecl
         &:nth-child(6) {
             .colouredCell {
-                background-color: #8be2ff;
+                background-color: #95e3fd;
             }
         }
 
@@ -83,5 +80,30 @@
     tbody tr .colouredCell {
         width: 3px;
         padding: 0;
+    }
+
+
+    // goal diff colours
+    tbody tr .goalColourPos {
+        color: green;
+    }
+
+    tbody tr .goalColourNeg {
+        color: red;
+    }
+
+    // highlighted columns
+    tbody tr td {
+        &:nth-child(2), &:nth-child(4), &:nth-child(10) {
+            color: black;
+        }
+    }
+
+    tbody tr {
+        -webkit-transition: 0.075s 0.075s;
+
+        &:hover {
+            background-color: #d1d1d1;
+        }
     }
 }

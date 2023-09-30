@@ -10,9 +10,9 @@ function Main() {
 
     return (
         <div className={styles.base}>
-            <Card>
+            {/* <Card> */}
                 <LeagueTable></LeagueTable>
-            </Card>
+            {/* </Card> */}
 
         </div>
     )
