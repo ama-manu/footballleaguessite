@@ -7,6 +7,7 @@ const cors = require("cors");
 app.use(cors());
 
 var buli = undefined;
+var union = undefined;
 
 // function to fetch data from api
 async function fetchAsync(url) {
@@ -25,14 +26,26 @@ const url = "https://api.openligadb.de/getbltable/bl1/2023";
     buli = await fetchAsync(url);
 })()
 
+// fetchung union Berlin data from openligadb
+const urlu = "https://api.openligadb.de/getmatchdata/bl1/2023/Union%20Berlin";
+(async () => {
+    union = await fetchAsync(urlu);
+})()
+
 app.get("/", (req, res) => {
     res.send("<h1>test</h1>");
 })
 
-// send data on /api endpoint
-app.get("/api", (req, res) => {
+// send data on /api/buli endpoint
+app.get("/api/buli", (req, res) => {
     // console.log(buli);
     res.send(buli);
+})
+
+// send data on /api/union endpoint
+app.get("/api/union", (req, res) => {
+    // console.log(buli);
+    res.send(union);
 })
 
 app.use((req, res) => {

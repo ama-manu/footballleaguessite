@@ -15,7 +15,7 @@ import styles from './LeagueTable.module.scss'
 // }
 
 
-const url = "http://localhost:3000/api";
+const url = "http://localhost:3000/api/buli";
 
 function FetchData() {
     const [dbdata, setdbData] = useState([]);
