@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as d3 from 'd3';
 
-import styles from './Charts.module.scss'
+import styles from './Chart.module.scss'
 
 const url = "http://localhost:3000/api/union";
 
