@@ -17,11 +17,11 @@ import styles from './LeagueTable.module.scss'
 
 const url = "http://localhost:3000/api/bulitable";
 
-function FetchData() {
+function FetchData(dataUrl) {
     const [dbdata, setdbData] = useState([]);
 
     useEffect(() => {
-        fetch(url)
+        fetch(dataUrl)
             .then(response => response.json())
             .then(data => setdbData(data))
             .catch(err => console.log(err))
@@ -46,7 +46,7 @@ function GoalDiffColour({ p }) {
 }
 
 function LeagueTable() {
-    const tempData = FetchData();
+    const tempData = FetchData(url);
     const data = tempData;
 
     /** @type import('@tanstack/react-table).ColumnDef<any>*/

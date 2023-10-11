@@ -12,8 +12,8 @@ function Main() {
     return (
         <div className={styles.base}>
             {/* <Card> */}
-            {/* <LeagueTable/> */}
-            <Chart />
+            <LeagueTable/>
+            {/* <Chart /> */}
             {/* </Card> */}
         </div>
     )
