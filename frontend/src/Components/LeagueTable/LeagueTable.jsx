@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
+import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
 
 import styles from './LeagueTable.module.scss'
 
@@ -30,20 +31,33 @@ function FetchData(dataUrl) {
     return dbdata;
 }
 
-function GoalDiffColour({ p }) {
+function FillCells({ p }) {
     var cname = '';
+    var content = flexRender(p.column.columnDef.cell, p.getContext());
+
+    // goal diff colours
     if (p.getContext().getValue() > 0 && p.getContext().column.id === "D") {
-        cname = styles.goalColourPos;
+        cname = styles.colourPos;
     } else if (p.getContext().getValue() < 0 && p.getContext().column.id === "D") {
-        cname = styles.goalColourNeg;
+        cname = styles.colourNeg;
     }
+
+    // position change arrows
+    if (p.getContext().getValue() === "up") {
+        cname = styles.colourPos;
+        content = <RiArrowUpSLine />
+    } else if (p.getContext().getValue() === "down") {
+        cname = styles.colourNeg;
+        content = <RiArrowDownSLine />
+    }
+
     return (
         <td key={p.id} className={cname}>
-            {flexRender(p.column.columnDef.cell, p.getContext()
-            )}
+            {content}
         </td>
     )
 }
+
 
 function LeagueTable() {
     const tempData = FetchData(url);
@@ -55,6 +69,10 @@ function LeagueTable() {
 
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
     const columns = [
+        {
+            header: '',
+            accessorKey: 'posChange'
+        },
         {
             header: '',
             accessorKey: 'teamName'
@@ -120,7 +138,7 @@ function LeagueTable() {
                             //     {flexRender(cell.column.columnDef.cell, cell.getContext()
                             //     )}
                             // </td>
-                            <GoalDiffColour
+                            <FillCells
                                 p={cell}
                             />
                         ))}
