@@ -105,10 +105,6 @@ function calcLeague(matches) {
             }
         }
 
-        if ((match.team1.teamName === "Bayer Leverkusen" || match.team2.teamName === "Bayer Leverkusen") && match.group.groupOrderID === 5) {
-            console.log(match);
-        }
-
         // construct teams
         var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
         var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
@@ -151,9 +147,6 @@ function calcLeague(matches) {
                 team.lost += teamPre.lost;
                 team.draw += teamPre.draw;
                 team.goalDiff = team.goals - team.opponentGoals;
-
-
-
             }
         });
     }
