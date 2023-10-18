@@ -47,6 +47,10 @@ function GoalDiffColour({ p }) {
 
 function LeagueTable() {
     const tempData = FetchData(url);
+    console.log(tempData);
+    tempData.forEach(element => {
+        console.log(element);
+    });
     const data = tempData;
 
     /** @type import('@tanstack/react-table).ColumnDef<any>*/

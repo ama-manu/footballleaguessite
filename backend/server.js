@@ -9,6 +9,7 @@ app.use(cors());
 var buliteams = undefined;
 var bulitable = undefined;
 var buligames = undefined;
+var btables = undefined;
 
 // function to fetch data from api
 async function fetchAsync(url) {
@@ -46,7 +47,7 @@ function calcLeague(matches) {
     });
 
     // set up empty tables for all matchdays
-    var tables = [...Array(finishedMatches.slice(-1).pop().group.groupOrderID)].map(e => []);
+    var tables = [...Array(finishedMatches.at(-1).group.groupOrderID)].map(e => []);
 
     // calculate points for each team per matchday
     finishedMatches.forEach(match => {
@@ -56,7 +57,7 @@ function calcLeague(matches) {
 
 
 
-        var goals = match.goals.slice(-1).pop();
+        var goals = match.goals.at(-1);
         // if no goals, add 0:0
         if (goals === undefined) {
             goals = {
@@ -104,16 +105,28 @@ function calcLeague(matches) {
             tables[i - 1].forEach(teamPre => {
                 if ((team.teamName === teamPre.teamName) && (team.matches == (teamPre.matches + 1))) {
                     team.points += teamPre.points;
+                    team.opponentGoals += teamPre.opponentGoals;
+                    team.goals += teamPre.goals;
+                    team.won += teamPre.won;
+                    team.lost += teamPre.lost;
+                    team.draw += teamPre.draw;
+                    team.goalDiff = team.goals - team.opponentGoals;
                 }
             });
         });
     }
-    // console.log(tables.slice(-1));
+    // console.log(tables.at(-1));
 
     return tables;
 }
 
-
+// sort league table by points and goalDiff and goals
+function sortLeagueTable(table) {
+    var sortedTable = table.sort((a, b) => {
+        return b.points - a.points || b.goalDiff - a.goalDiff || b.goals - a.goals;
+    });
+    return sortedTable;
+}
 
 // fetchung buli teams data from openliga db
 const url_buliteams = "https://api.openligadb.de/getavailableteams/bl1/2023";
@@ -122,24 +135,20 @@ const url_buliteams = "https://api.openligadb.de/getavailableteams/bl1/2023";
 })()
 
 // fetching buli data from openligadb
-const url_bulitable = "https://api.openligadb.de/getbltable/bl1/2023";
+// const url_bulitable = "https://api.openligadb.de/getbltable/bl1/2023";
+const url_bulitable = "https://api.openligadb.de/getmatchdata/bl1/2023";
 (async () => {
-    bulitable = await fetchAsync(url_bulitable);
+    buligames = await fetchAsync(url_bulitable);
+    btables = calcLeague(buligames);
+    bulitable = btables.at(-1);
 })()
 
 // fetchung buli games data from openligadb
 const url_buligames = "https://api.openligadb.de/getmatchdata/bl1/2023";
 (async () => {
     buligames = await fetchAsync(url_buligames);
+    btables = calcLeague(buligames);
 })()
-
-
-
-
-
-
-
-
 
 
 
@@ -147,22 +156,15 @@ app.get("/", (req, res) => {
     res.send("<h1>test</h1>");
 })
 
-
-
-
-
-
 // send data on /api/bulitable endpoint
 app.get("/api/bulitable", (req, res) => {
     // console.log(bulitable);
-    res.send(bulitable);
+    res.send(sortLeagueTable(bulitable));
 })
 
 // send data on /api/buligames endpoint
 app.get("/api/buligames", (req, res) => {
-    // calculate league position each matchday
-    // console.log(buligames);
-    res.send(calcLeague(buligames));
+    res.send(btables);
 })
 
 app.use((req, res) => {
