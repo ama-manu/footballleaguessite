@@ -22,12 +22,13 @@ async function fetchAsync(url) {
     }
 }
 
-function buliTeam(teamName, shortName, teamIconUrl, points, position, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
+function buliTeam(teamName, shortName, teamIconUrl, points, position, posChange, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
     this.teamName = teamName;
     this.shortName = shortName;
     this.teamIconUrl = teamIconUrl;
     this.points = points;
     this.position = position;
+    this.posChange = posChange;                   // team moved up or down a position
     this.opponentGoals = opponentGoals;
     this.goals = goals;
     this.matches = matches;
@@ -35,6 +36,40 @@ function buliTeam(teamName, shortName, teamIconUrl, points, position, opponentGo
     this.lost = lost;
     this.draw = draw;
     this.goalDiff = goalDiff;
+}
+
+// sort league table by points and goalDiff and goals
+function sortLeagueTable(table) {
+    var sortedTable = table.sort((a, b) => {
+        return b.points - a.points || b.goalDiff - a.goalDiff || b.goals - a.goals;
+    });
+
+    // calculate position
+    var i = 1;
+    sortedTable.forEach(team => {
+        team.position = i;
+        i++;
+    });
+
+    return sortedTable;
+}
+
+// determine league position changes
+function calcPosChange(tables) {
+    // go through tables
+    // start with 2nd day, always look back 1 day
+    for (var i = 1; i < tables.length; i++) {
+        // go through teams
+        tables[i].forEach(team => {
+            const teamPreviousDay = tables[i - 1].find(x => x.teamName === team.teamName);
+            if (team.position > teamPreviousDay.position) {
+                team.posChange = "up";
+            } else if (team.position < teamPreviousDay.position) {
+                team.posChange = "down";
+            }
+        });
+    }
+    return tables;
 }
 
 // league matchday calculations
@@ -66,8 +101,8 @@ function calcLeague(matches) {
         }
 
         // construct teams
-        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
-        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
+        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
+        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
 
         // calculate points
         if (pointsTeam1 > pointsTeam2) {
@@ -81,12 +116,6 @@ function calcLeague(matches) {
             newTeam1.draw, newTeam2.draw = 1;
         }
 
-        
-        // if(match.team1.teamName === 'Werder Bremen') {
-        //     console.log(match.matchID, goals, newTeam1.points);
-        // } else if ( match.team2.teamName === 'Werder Bremen') {
-        //     console.log(match.matchID, goals, newTeam2.points);
-        // }
 
         // add teams to matchday tables
         tables[match.group.groupOrderID - 1].push(newTeam1);
@@ -113,26 +142,16 @@ function calcLeague(matches) {
             });
         });
     }
-    // console.log(tables.at(-1));
 
-    return tables;
-}
-
-// sort league table by points and goalDiff and goals
-function sortLeagueTable(table) {
-    var sortedTable = table.sort((a, b) => {
-        return b.points - a.points || b.goalDiff - a.goalDiff || b.goals - a.goals;
+    // sort tables
+    tables.forEach(table => {
+        sortLeagueTable(table);
     });
 
-    // calculate position
-    var i = 1;
-    sortedTable.forEach(team => {
-        team.position = i;
-        i++;
-    });
-
-    return sortedTable;
+    // calculate position movements
+    return calcPosChange(tables);
 }
+
 
 // fetchung buli teams data from openliga db
 const url_buliteams = "https://api.openligadb.de/getavailableteams/bl1/2023";
@@ -165,7 +184,7 @@ app.get("/", (req, res) => {
 // send data on /api/bulitable endpoint
 app.get("/api/bulitable", (req, res) => {
     // console.log(bulitable);
-    res.send(sortLeagueTable(bulitable));
+    res.send(bulitable);
 })
 
 // send data on /api/buligames endpoint
