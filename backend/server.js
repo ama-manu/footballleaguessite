@@ -22,11 +22,12 @@ async function fetchAsync(url) {
     }
 }
 
-function buliTeam(teamName, shortName, teamIconUrl, points, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
+function buliTeam(teamName, shortName, teamIconUrl, points, position, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
     this.teamName = teamName;
     this.shortName = shortName;
     this.teamIconUrl = teamIconUrl;
     this.points = points;
+    this.position = position;
     this.opponentGoals = opponentGoals;
     this.goals = goals;
     this.matches = matches;
@@ -55,8 +56,6 @@ function calcLeague(matches) {
         const pointsTeam1 = match.matchResults[1].pointsTeam1;
         const pointsTeam2 = match.matchResults[1].pointsTeam2;
 
-
-
         var goals = match.goals.at(-1);
         // if no goals, add 0:0
         if (goals === undefined) {
@@ -66,10 +65,9 @@ function calcLeague(matches) {
             }
         }
 
-
         // construct teams
-        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
-        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
+        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
+        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
 
         // calculate points
         if (pointsTeam1 > pointsTeam2) {
@@ -125,6 +123,14 @@ function sortLeagueTable(table) {
     var sortedTable = table.sort((a, b) => {
         return b.points - a.points || b.goalDiff - a.goalDiff || b.goals - a.goals;
     });
+
+    // calculate position
+    var i = 1;
+    sortedTable.forEach(team => {
+        team.position = i;
+        i++;
+    });
+
     return sortedTable;
 }
 
