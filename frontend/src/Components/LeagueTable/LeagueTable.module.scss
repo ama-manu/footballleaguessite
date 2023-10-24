@@ -4,7 +4,7 @@
     border-collapse: collapse;
     margin: 0;
     padding: 0;
-    
+
     color: #7a7a7a;
     background-color: white;
 
@@ -27,22 +27,26 @@
     }
 
     tbody tr td {
-        &:nth-child(4) {
+        &:nth-child(5) {
             text-align: left;
-            width: 25rem;   
+            width: 25rem;
         }
 
-        &:nth-child(5),
-        &:nth-child(10),
-        &:nth-child(11) {
+        &:nth-child(6),
+        &:nth-child(11),
+        &:nth-child(12) {
             text-align: right;
         }
     }
 
     // colour placements (ucl, uel, uecl, relpo, rel
     tbody tr {
+
         // ucl
-        &:nth-child(1), &:nth-child(2), &:nth-child(3), &:nth-child(4) {
+        &:nth-child(1),
+        &:nth-child(2),
+        &:nth-child(3),
+        &:nth-child(4) {
             .colouredCell {
                 background-color: green;
             }
@@ -70,7 +74,8 @@
         }
 
         // rel
-        &:nth-child(17), &:nth-child(18) {
+        &:nth-child(17),
+        &:nth-child(18) {
             .colouredCell {
                 background-color: #df1616;
             }
@@ -83,6 +88,42 @@
     }
 
 
+
+
+    // arrow colours
+    tbody tr .colourPos svg {
+        color: variables.$positive-colour;
+    }
+
+    tbody tr .colourNeg svg {
+        color: variables.$negative-colour;
+    }
+
+    // position column width
+    tbody tr td {
+        &:nth-child(2) {
+            padding: 0 0.25rem 0;
+        }
+    }
+
+    // arrow column width
+    tbody tr td {
+        &:nth-child(3) {
+            padding: 0;
+        }
+    }
+
+    // team icons
+    tbody tr .teamIcons {
+        padding: 0.5rem 0.125rem 0.5rem;
+        margin-top: 1rem;
+
+        // display: inline;
+        img {
+            height: 2rem;
+        }
+    }
+
     // goal diff colours
     tbody tr .colourPos {
         color: variables.$positive-colour;
@@ -92,18 +133,13 @@
         color: variables.$negative-colour;
     }
 
-    // // arrow colours
-    tbody tr .colourPos svg {
-        color: variables.$positive-colour;
-    }
-
-    tbody tr .colourNeg svg {
-        color: variables.$negative-colour;
-    }
-    
     // highlighted columns
     tbody tr td {
-        &:nth-child(3), &:nth-child(5), &:nth-child(11) {
+
+        &:nth-child(2),
+        &:nth-child(4),
+        &:nth-child(6),
+        &:nth-child(12) {
             color: black;
         }
     }

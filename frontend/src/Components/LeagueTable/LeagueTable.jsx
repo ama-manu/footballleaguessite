@@ -51,6 +51,17 @@ function FillCells({ p }) {
         content = <RiArrowDownSLine />
     }
 
+    // add icons
+    if (typeof p.getContext().getValue() === "string" && p.getContext().getValue().slice(0, 4) === "http") {
+        cname = styles.teamIcons;
+        content = <img
+            src={p.getContext().getValue()}
+            alt="logo"
+        />
+    }
+
+
+
     return (
         <td key={p.id} className={cname}>
             {content}
@@ -61,10 +72,10 @@ function FillCells({ p }) {
 
 function LeagueTable() {
     const tempData = FetchData(url);
-    console.log(tempData);
-    tempData.forEach(element => {
-        console.log(element);
-    });
+    // console.log(tempData);
+    // tempData.forEach(element => {
+    //     console.log(element);
+    // });
     const data = tempData;
 
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
@@ -72,6 +83,11 @@ function LeagueTable() {
         {
             header: '',
             accessorKey: 'posChange'
+        },
+        {
+            id: 'teamIconUrl',
+            header: '',
+            accessorKey: 'teamIconUrl'
         },
         {
             header: '',
