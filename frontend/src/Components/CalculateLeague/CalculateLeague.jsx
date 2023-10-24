@@ -1,10 +1,6 @@
-const express = require("express");
-const app = express();
+import React from 'react'
 
-const fetch = require("node-fetch-commonjs");
-const cors = require("cors");
-
-app.use(cors());
+import styles from '/CalculateLeague.module.scss'
 
 var buliteams = undefined;
 var bulitable = undefined;
@@ -14,14 +10,15 @@ var btables = undefined;
 // function to fetch data from api
 async function fetchAsync(url) {
     try {
-        let response = await fetch(url);
-        let data = await response.json();
+        const response = await fetch(url);
+        const data = await response.json();
         return data;
     } catch (error) {
         console.log(error.message);
     }
 }
 
+// team object constructor funciton
 function buliTeam(teamName, shortName, teamIconUrl, points, position, posChange, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
     this.teamName = teamName;
     this.shortName = shortName;
@@ -160,48 +157,15 @@ function calcLeague(matches) {
     return calcPosChange(tables);
 }
 
+function CalculateLeague() {
+    var url_bulitable = "https://api.openligadb.de/getmatchdata/bl1/2023";
+    var data = fetchAsync(url_bulitable);
+    var tables = calcLeague(data);
 
-// fetchung buli teams data from openliga db
-const url_buliteams = "https://api.openligadb.de/getavailableteams/bl1/2023";
-(async () => {
-    buliteams = await fetchAsync(url_buliteams);
-})()
+    return (
+        
+        tables
+    )
+}
 
-// fetching buli data from openligadb
-// const url_bulitable = "https://api.openligadb.de/getbltable/bl1/2023";
-const url_bulitable = "https://api.openligadb.de/getmatchdata/bl1/2023";
-(async () => {
-    buligames = await fetchAsync(url_bulitable);
-    btables = calcLeague(buligames);
-    bulitable = btables.at(-1);
-})()
-
-// fetchung buli games data from openligadb
-const url_buligames = "https://api.openligadb.de/getmatchdata/bl1/2023";
-(async () => {
-    buligames = await fetchAsync(url_buligames);
-    btables = calcLeague(buligames);
-})()
-
-
-
-app.get("/", (req, res) => {
-    res.send("<h1>test</h1>");
-})
-
-// send data on /api/bulitable endpoint
-app.get("/api/bulitable", (req, res) => {
-    // console.log(bulitable);
-    res.send(bulitable);
-})
-
-// send data on /api/buligames endpoint
-app.get("/api/buligames", (req, res) => {
-    res.send(btables);
-})
-
-app.use((req, res) => {
-    res.status(404).json({ message: "Not found" });
-})
-
-app.listen(3000, () => console.log("Server started on port 3000"));
+export default CalculateLeague

@@ -16,7 +16,7 @@ import styles from './LeagueTable.module.scss'
 // }
 
 
-const url = "http://localhost:3000/api/bulitable";
+// const url = "http://localhost:3000/api/bulitable";
 
 function FetchData(dataUrl) {
     const [dbdata, setdbData] = useState([]);
@@ -71,11 +71,9 @@ function FillCells({ p }) {
 
 
 function LeagueTable() {
+    // var url = "http://localhost:3000/api/bulitable"
+    var url = "http://localhost:3000/api/league/buli/day8"
     const tempData = FetchData(url);
-    // console.log(tempData);
-    // tempData.forEach(element => {
-    //     console.log(element);
-    // });
     const data = tempData;
 
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
