@@ -73,7 +73,8 @@ function FillCells({ p }) {
 
 
 function LeagueTable({ data }) {
-    var retVal = 0;
+    
+    // invalid data in case no data is sent
     if (!data) {
         // retVal = <div>Loading ...</div>
         data = {

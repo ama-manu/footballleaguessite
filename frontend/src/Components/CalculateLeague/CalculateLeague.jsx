@@ -162,17 +162,6 @@ async function calcLeague(matches) {
 
 function CalculateLeague() {
     var url_bulimatches = "https://api.openligadb.de/getmatchdata/bl1/2023";
-    // var data = fetchAsync(url_bulimatches);
-
-    // var tables
-    // (async () => {
-    //     let data = await fetchAsync(url_bulimatches);
-    //     tables = await calcLeague(data);
-    //     await console.log(tables);
-
-    //     // return tables;
-    // })();
-
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -181,9 +170,10 @@ function CalculateLeague() {
                 const response = await fetch(url_bulimatches);
                 const result = await response.json();
                 const fresult = await calcLeague(result);
+                const table0 = await fresult.at(-1)
 
                 // await console.log(fresult);
-                setData(fresult);
+                setData(table0);
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }
@@ -194,7 +184,7 @@ function CalculateLeague() {
 
     return (
         // <p></p>        
-        <LeagueTable data = {data[0]} />
+        <LeagueTable data = {data} />
     )
 
 }
