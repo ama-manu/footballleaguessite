@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+
+import LeagueTable from '../LeagueTable/LeagueTable';
 
 import styles from './CalculateLeague.module.scss'
 
@@ -162,20 +164,38 @@ function CalculateLeague() {
     var url_bulimatches = "https://api.openligadb.de/getmatchdata/bl1/2023";
     // var data = fetchAsync(url_bulimatches);
 
-    var tables
-    (async () => {
-        let data = await fetchAsync(url_bulimatches);
-        tables = await calcLeague(data);
-        await console.log(tables);
+    // var tables
+    // (async () => {
+    //     let data = await fetchAsync(url_bulimatches);
+    //     tables = await calcLeague(data);
+    //     await console.log(tables);
 
-        // return tables;
-    })();
+    //     // return tables;
+    // })();
 
+    const [data, setData] = useState(null);
 
-    // return (
-    //     // tables[0]
-    //     <p></p>
-    // )
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch(url_bulimatches);
+                const result = await response.json();
+                const fresult = await calcLeague(result);
+
+                // await console.log(fresult);
+                setData(fresult);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    return (
+        // <p></p>        
+        <LeagueTable data = {data[0]} />
+    )
 
 }
 

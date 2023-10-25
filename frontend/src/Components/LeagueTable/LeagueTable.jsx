@@ -72,9 +72,26 @@ function FillCells({ p }) {
 }
 
 
-function LeagueTable() {
-    var data = CalculateLeague();
-    console.log(data);
+function LeagueTable({ data }) {
+    var retVal = 0;
+    if (!data) {
+        // retVal = <div>Loading ...</div>
+        data = {
+            "posChange": 0,
+            "teamIconUrl": 0,
+            "teamName": 0,
+            "matches": 0,
+            "won": 0,
+            "draw": 0,
+            "lost": 0,
+            "goals": 0,
+            "opponentGoals": 0,
+            "goalsDiff": 0,
+            "points": 0
+        }
+    }
+    // } else {
+    // // console.log(data[0]);
 
     // /** @type import('@tanstack/react-table).ColumnDef<any>*/
     // const columns = [
@@ -125,43 +142,130 @@ function LeagueTable() {
 
     // const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
-    // return (
-    //     <table className={styles.table}>
-    //         <thead>
-    //             {table.getHeaderGroups().map(headerGroup => (
-    //                 <tr key={headerGroup.id}>
-    //                     <th className={styles.colouredCell}></th>
-    //                     <th></th>
-    //                     {headerGroup.headers.map(header => (
-    //                         <th key={header.id}>
-    //                             {flexRender(
-    //                                 header.column.columnDef.header, header.getContext()
-    //                             )}
-    //                         </th>
-    //                     ))}
-    //                 </tr>
-    //             ))}
-    //         </thead>
-    //         <tbody>
-    //             {table.getRowModel().rows.map((row, rindex) => (
-    //                 <tr key={row.id}>
-    //                     <td className={styles.colouredCell}></td>
-    //                     <td>{rindex + 1}</td>
-    //                     {row.getVisibleCells().map(cell => (
-    //                         // <td key={cell.id}>
-    //                         //     {flexRender(cell.column.columnDef.cell, cell.getContext()
-    //                         //     )}
-    //                         // </td>
-    //                         <FillCells
-    //                             p={cell}
-    //                         />
-    //                     ))}
-    //                 </tr>
-    //             ))}
-    //         </tbody>
-    //     </table>
-    // );
-    return data
+    // retVal = <table className={styles.table}>
+    //     <thead>
+    //         {table.getHeaderGroups().map(headerGroup => (
+    //             <tr key={headerGroup.id}>
+    //                 <th className={styles.colouredCell}></th>
+    //                 <th></th>
+    //                 {headerGroup.headers.map(header => (
+    //                     <th key={header.id}>
+    //                         {flexRender(
+    //                             header.column.columnDef.header, header.getContext()
+    //                         )}
+    //                     </th>
+    //                 ))}
+    //             </tr>
+    //         ))}
+    //     </thead>
+    //     <tbody>
+    //         {table.getRowModel().rows.map((row, rindex) => (
+    //             <tr key={row.id}>
+    //                 <td className={styles.colouredCell}></td>
+    //                 <td>{rindex + 1}</td>
+    //                 {row.getVisibleCells().map(cell => (
+    //                     // <td key={cell.id}>
+    //                     //     {flexRender(cell.column.columnDef.cell, cell.getContext()
+    //                     //     )}
+    //                     // </td>
+    //                     <FillCells
+    //                         p={cell}
+    //                     />
+    //                 ))}
+    //             </tr>
+    //         ))}
+    //     </tbody>
+    // </table>
+
+
+    // console.log(data[0]);
+
+    /** @type import('@tanstack/react-table).ColumnDef<any>*/
+    const columns = [
+        {
+            header: '',
+            accessorKey: 'posChange'
+        },
+        {
+            id: 'teamIconUrl',
+            header: '',
+            accessorKey: 'teamIconUrl'
+        },
+        {
+            header: '',
+            accessorKey: 'teamName'
+        },
+        {
+            header: 'Spiele',
+            accessorKey: 'matches'
+        },
+        {
+            header: 'S',
+            accessorKey: 'won'
+        },
+        {
+            header: 'U',
+            accessorKey: 'draw'
+        },
+        {
+            header: 'N',
+            accessorKey: 'lost'
+        },
+        {
+            header: 'Tore',
+            // accessorKey: 'goals'
+            accessorFn: (row => (row.goals + ":" + row.opponentGoals))
+        },
+        {
+            header: 'D',
+            // accessorKey: 'goalDiff'
+            accessorFn: (row => (row.goalDiff < 1 ? "" : "+") + row.goalDiff)   // add + infront of numbers > 0
+        },
+        {
+            header: 'Punkte',
+            accessorKey: 'points'
+        }
+    ]
+
+    const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
+
+    // retVal = 
+    return (
+        <table className={styles.table}>
+            <thead>
+                {table.getHeaderGroups().map(headerGroup => (
+                    <tr key={headerGroup.id}>
+                        <th className={styles.colouredCell}></th>
+                        <th></th>
+                        {headerGroup.headers.map(header => (
+                            <th key={header.id}>
+                                {flexRender(
+                                    header.column.columnDef.header, header.getContext()
+                                )}
+                            </th>
+                        ))}
+                    </tr>
+                ))}
+            </thead>
+            <tbody>
+                {table.getRowModel().rows.map((row, rindex) => (
+                    <tr key={row.id}>
+                        <td className={styles.colouredCell}></td>
+                        <td>{rindex + 1}</td>
+                        {row.getVisibleCells().map(cell => (
+                            // <td key={cell.id}>
+                            //     {flexRender(cell.column.columnDef.cell, cell.getContext()
+                            //     )}
+                            // </td>
+                            <FillCells
+                                p={cell}
+                            />
+                        ))}
+                    </tr>
+                ))}
+            </tbody>
+        </table>
+    );
 }
 
 export default LeagueTable
