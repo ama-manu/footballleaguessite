@@ -1,6 +1,6 @@
 import React from 'react'
 
-import styles from '/CalculateLeague.module.scss'
+import styles from './CalculateLeague.module.scss'
 
 var buliteams = undefined;
 var bulitable = undefined;
@@ -70,9 +70,10 @@ function calcPosChange(tables) {
 }
 
 // league matchday calculations
-function calcLeague(matches) {
+async function calcLeague(matches) {
     // filter only finished matches
     var finishedMatches = [];
+    // console.log(matches);
     matches.forEach(match => {
         if (match.matchIsFinished === true) {
             finishedMatches.push(match);
@@ -131,7 +132,7 @@ function calcLeague(matches) {
 
     // add up stats
     // select table, first matchday doesnt need adding up
-    for (i = 1; i < tables.length; i++) {
+    for (var i = 1; i < tables.length; i++) {
         // select team
         tables[i].forEach(team => {
             // add up stats from previous matchday
@@ -158,14 +159,24 @@ function calcLeague(matches) {
 }
 
 function CalculateLeague() {
-    var url_bulitable = "https://api.openligadb.de/getmatchdata/bl1/2023";
-    var data = fetchAsync(url_bulitable);
-    var tables = calcLeague(data);
+    var url_bulimatches = "https://api.openligadb.de/getmatchdata/bl1/2023";
+    // var data = fetchAsync(url_bulimatches);
 
-    return (
-        
-        tables
-    )
+    var tables
+    (async () => {
+        let data = await fetchAsync(url_bulimatches);
+        tables = await calcLeague(data);
+        await console.log(tables);
+
+        // return tables;
+    })();
+
+
+    // return (
+    //     // tables[0]
+    //     <p></p>
+    // )
+
 }
 
 export default CalculateLeague
