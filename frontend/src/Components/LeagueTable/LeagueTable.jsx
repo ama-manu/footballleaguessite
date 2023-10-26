@@ -72,7 +72,7 @@ function FillCells({ p }) {
 }
 
 
-function LeagueTable({ data }) {
+function LeagueTable({ data, setMatchday }) {
     
     // invalid data in case no data is sent
     if (!data) {
@@ -142,6 +142,8 @@ function LeagueTable({ data }) {
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
     return (
+        <>
+        <button onClick={() => setMatchday(0)}>HALLLOOO</button>
         <table className={styles.table}>
             <thead>
                 {table.getHeaderGroups().map(headerGroup => (
@@ -172,6 +174,7 @@ function LeagueTable({ data }) {
                 ))}
             </tbody>
         </table>
+        </>
     );
 }
 
