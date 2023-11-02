@@ -2,6 +2,9 @@ import React, { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
 import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
 
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+
 import CalculateLeague from "../CalculateLeague/CalculateLeague";
 
 import styles from './LeagueTable.module.scss'
@@ -140,11 +143,23 @@ function LeagueTable({ data, setMatchday }) {
         }
     ]
 
+    // table data
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
+
+    // dropdown menu
+    var dropdownMenu = [];
+    for(var i = 1; i <= data.length; i++) {
+        dropdownMenu.push({
+            value: i,
+            label: `${i}`
+        });
+    }
+    const defaultOption = dropdownMenu.at(-1);
 
     return (
         <>
-        <button onClick={() => setMatchday(8)}>HALLLOOO</button>
+        {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
+        <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" />
         <table className={styles.table}>
             <thead>
                 {table?.getHeaderGroups().map(headerGroup => (
