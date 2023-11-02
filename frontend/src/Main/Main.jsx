@@ -6,11 +6,6 @@ import CalculateLeague from '../Components/CalculateLeague/CalculateLeague.jsx'
 
 import styles from './Main.module.scss'
 
-var buliteams = undefined;
-var bulitable = undefined;
-var buligames = undefined;
-var btables = undefined;
-
 // team object constructor funciton
 function buliTeam(teamName, shortName, teamIconUrl, points, position, posChange, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
     this.teamName = teamName;
@@ -155,9 +150,8 @@ function Main() {
 
     var url_bulimatches = "https://api.openligadb.de/getmatchdata/bl1/2023";
     const [data, setData] = useState(null);
-    const [matchday, setMatchday] = useState(undefined);
 
-    const [sentData, setSentData] = useState(null);
+
     // var tempData;
 
     useEffect(() => {
@@ -166,10 +160,10 @@ function Main() {
                 const response = await fetch(url_bulimatches);
                 const result = await response.json();
                 const fresult = await calcLeague(result);
-                const tempData = await fresult.at(-1);
+                // const tempData = await fresult.at(-1);
 
                 // await console.log(fresult);
-                setData(tempData);
+                setData(fresult);
                 // await setSentData(data);
             } catch (error) {
                 console.error("Error fetching data: ", error);
@@ -181,11 +175,7 @@ function Main() {
 
     return (
         <div className={styles.base}>
-            {/* <Card> */}
-            {/* <LeagueTable/> */}
-            {/* <Chart /> */}
-            {/* </Card> */}
-            <CalculateLeague data = {data}/>
+            <CalculateLeague data={data} />
         </div>
     )
 }

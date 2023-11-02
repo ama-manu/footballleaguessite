@@ -74,7 +74,7 @@ function FillCells({ p }) {
 
 function LeagueTable({ data, setMatchday }) {
     
-    // invalid data in case no data is sent
+    //invalid data in case no data is sent
     if (!data) {
         // retVal = <div>Loading ...</div>
         data = {
@@ -91,6 +91,7 @@ function LeagueTable({ data, setMatchday }) {
             "points": 0
         }
     }
+    // var tempData = data;
  
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
     const columns = [
@@ -143,10 +144,10 @@ function LeagueTable({ data, setMatchday }) {
 
     return (
         <>
-        <button onClick={() => setMatchday(0)}>HALLLOOO</button>
+        <button onClick={() => setMatchday(8)}>HALLLOOO</button>
         <table className={styles.table}>
             <thead>
-                {table.getHeaderGroups().map(headerGroup => (
+                {table?.getHeaderGroups().map(headerGroup => (
                     <tr key={headerGroup.id}>
                         <th className={styles.colouredCell}></th>
                         <th></th>
@@ -161,7 +162,7 @@ function LeagueTable({ data, setMatchday }) {
                 ))}
             </thead>
             <tbody>
-                {table.getRowModel().rows.map((row, rindex) => (
+                {table?.getRowModel().rows.map((row, rindex) => (
                     <tr key={row.id}>
                         <td className={styles.colouredCell}></td>
                         <td>{rindex + 1}</td>

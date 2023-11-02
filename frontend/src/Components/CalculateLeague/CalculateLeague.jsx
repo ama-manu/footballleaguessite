@@ -2,28 +2,45 @@ import React, { useEffect, useState } from 'react'
 
 import LeagueTable from '../LeagueTable/LeagueTable';
 
+function CalculateLeague({ data }) {
+    const [matchday, setMatchday] = useState(undefined);
+    const [sentData, setSentData] = useState(null);
+
+    const updateMatchday = (md) => {
+        setMatchday(md);
+    }
+
+    useEffect(() => {
+        console.log(matchday);
+        const selectMatchdayFromData = async () => {
+            try {
+                var tempData;
+                if (matchday != undefined) {
+                    tempData = await data.at(matchday);
+                } else {
+                    tempData = await data.at(-1);
+
+                }
+                setSentData(tempData);
+            } catch (error) {
+                console.error("Error calculating league data: ", error);
+            }
+        };
+
+        selectMatchdayFromData();
+    }, [data, matchday]);
 
 
 
-
-function CalculateLeague({data}) {
-
-
-    // (async () => {
-    //     if (matchday != undefined) {
-    //         // sentData = await data[data.length - 1];
-    //         // await console.log(sentData);
-    //         // await setData(data[data.length - 1])
-    //     } else {
-    //         // setData(data[data.])
-    //     }
-    // })()
 
 
     return (
         // <p></p>  
         // setMatchday={setMatchday}      
-        <LeagueTable data={data}  />
+        <>
+            {/* <button onClick={() => setMatchday(5)}>HALLLOOO</button> */}
+            <LeagueTable data={sentData} setMatchday={updateMatchday} />
+        </>
     )
 
 }
