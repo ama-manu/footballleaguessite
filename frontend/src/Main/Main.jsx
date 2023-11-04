@@ -52,9 +52,25 @@ function calcPosChange(tables) {
             } else if (team.position < teamPreviousDay.position) {
                 team.posChange = "up";
             }
+            // if (i === 9) {
+            //     console.log(teamPreviousDay.teamName, teamPreviousDay.position, " -> ", team.position);
+            // }
         });
     }
     return tables;
+}
+
+// fill teams with previous info if they haven't played yet
+function fillNotYetPlayedMatches(tables) {
+    for (var i = 0; i < tables.length - 1; i++) {
+        tables[i].forEach(team => {
+            if (tables[i + 1].find(x => x.teamName === team.teamName) === undefined) {
+                tables[i + 1].push(team);
+            };
+        });
+    }
+    
+    
 }
 
 // league matchday calculations
@@ -82,7 +98,7 @@ async function calcLeague(matches) {
         var sortedGoals = match.goals.sort((a, b) => {
             return a.matchMinute - b.matchMinute;
         });
-        var goals = match.goals.at(-1);
+        var goals = sortedGoals.at(-1); // match.goals
         // if no goals, add 0:0
         if (goals === undefined) {
             goals = {
@@ -137,6 +153,8 @@ async function calcLeague(matches) {
         });
     }
 
+    fillNotYetPlayedMatches(tables);
+
     // sort tables
     tables.forEach(table => {
         sortLeagueTable(table);
@@ -151,20 +169,13 @@ function Main() {
     var url_bulimatches = "https://api.openligadb.de/getmatchdata/bl1/2023";
     const [data, setData] = useState(null);
 
-
-    // var tempData;
-
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch(url_bulimatches);
                 const result = await response.json();
                 const fresult = await calcLeague(result);
-                // const tempData = await fresult.at(-1);
-
-                // await console.log(fresult);
                 setData(fresult);
-                // await setSentData(data);
             } catch (error) {
                 console.error("Error fetching data: ", error);
             }
