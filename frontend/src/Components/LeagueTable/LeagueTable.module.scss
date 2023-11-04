@@ -1,4 +1,7 @@
 @use '../../variables';
+@import 'include-media/dist/_include-media.scss';
+
+$breakpoints: variables.$resolution-breakpoints;
 
 .table {
     border-collapse: collapse;
@@ -22,7 +25,15 @@
             text-align: center;
             white-space: nowrap;
 
-            padding: 0.75rem 1rem;
+            // text padding based on screen width
+            @include media(">phone") {
+                padding: 0.75rem 1rem;
+            }
+
+            @include media("<=phone") {
+                padding: 0.75rem 0.5rem;
+            }
+            
 
             &:nth-child(5) {
                 text-align: left;
@@ -118,7 +129,7 @@
 
             // display: inline;
             img {
-                height: 2rem;
+                height: 1.75rem;
             }
         }
 

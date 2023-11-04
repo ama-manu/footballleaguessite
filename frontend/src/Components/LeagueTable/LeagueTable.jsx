@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useReactTable, getCoreRowModel, flexRender } from '@tanstack/react-table'
 import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
+import { useMediaQuery } from 'react-responsive';
 
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
@@ -64,7 +65,10 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
             "points": 0
         }
     }
- 
+
+    var isMobile = useMediaQuery({ query: `(max-width: 630px)` });
+    var reactiveTeamName = isMobile ? 'shortName' : 'teamName';
+
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
     const columns = [
         {
@@ -78,7 +82,8 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
         },
         {
             header: '',
-            accessorKey: 'teamName'
+            // accessorKey: 'teamName'
+            accessorKey: reactiveTeamName
         },
         {
             header: 'Spiele',
@@ -112,43 +117,67 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
         }
     ]
 
+    // trigger goal difference display based on screen width
+    if (isMobile) {
+        columns.splice(-2, 1);
+    } else {
+        if (!(columns.find((obj) => { // check if goalDiff not yet included in columns
+            return obj.header === 'D';
+        }))) {
+            columns.pop();  // remove last object from array
+            columns.push(
+                {
+                    header: 'D',
+                    // accessorKey: 'goalDiff'
+                    accessorFn: (row => (row.goalDiff < 1 ? "" : "+") + row.goalDiff)   // add + infront of numbers > 0
+                }
+            );  // add goalDiff
+            columns.push(
+                {
+                    header: 'Punkte',
+                    accessorKey: 'points'
+                }   
+            );  // re-add last item
+        }
+    }
+
     // table data
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
     return (
         <>
-        {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
-        {/* <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" /> */}
-        <table className={styles.table}>
-            <thead>
-                {table?.getHeaderGroups().map(headerGroup => (
-                    <tr key={headerGroup.id}>
-                        <th className={styles.colouredCell}></th>
-                        <th></th>
-                        {headerGroup.headers.map(header => (
-                            <th key={header.id}>
-                                {flexRender(
-                                    header.column.columnDef.header, header.getContext()
-                                )}
-                            </th>
-                        ))}
-                    </tr>
-                ))}
-            </thead>
-            <tbody>
-                {table?.getRowModel().rows.map((row, rindex) => (
-                    <tr key={row.id}>
-                        <td className={styles.colouredCell}></td>
-                        <td>{rindex + 1}</td>
-                        {row.getVisibleCells().map(cell => (
-                            <FillCells
-                                p={cell}
-                            />
-                        ))}
-                    </tr>
-                ))}
-            </tbody>
-        </table>
+            {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
+            {/* <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" /> */}
+            <table className={styles.table}>
+                <thead>
+                    {table?.getHeaderGroups().map(headerGroup => (
+                        <tr key={headerGroup.id}>
+                            <th className={styles.colouredCell}></th>
+                            <th></th>
+                            {headerGroup.headers.map(header => (
+                                <th key={header.id}>
+                                    {flexRender(
+                                        header.column.columnDef.header, header.getContext()
+                                    )}
+                                </th>
+                            ))}
+                        </tr>
+                    ))}
+                </thead>
+                <tbody>
+                    {table?.getRowModel().rows.map((row, rindex) => (
+                        <tr key={row.id}>
+                            <td className={styles.colouredCell}></td>
+                            <td>{rindex + 1}</td>
+                            {row.getVisibleCells().map(cell => (
+                                <FillCells
+                                    p={cell}
+                                />
+                            ))}
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
         </>
     );
 }
