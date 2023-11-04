@@ -8,39 +8,59 @@
     color: #7a7a7a;
     background-color: white;
 
+    font-size: 85%;
+
     thead {
         background-color: variables.$background-colour;
         font-size: 85%;
     }
 
-    thead,
-    tbody tr td {
-        // border: 1px solid black;
-        padding: 0.75rem 1rem;
-    }
-
-
-    // align text
-    tbody tr td {
-        text-align: center;
-        white-space: nowrap;
-    }
-
-    tbody tr td {
-        &:nth-child(5) {
-            text-align: left;
-            width: 25rem;
-        }
-
-        &:nth-child(6),
-        &:nth-child(11),
-        &:nth-child(12) {
-            text-align: right;
-        }
-    }
-
-    // colour placements (ucl, uel, uecl, relpo, rel
     tbody tr {
+
+        td {
+            // align text
+            text-align: center;
+            white-space: nowrap;
+
+            padding: 0.75rem 1rem;
+
+            &:nth-child(5) {
+                text-align: left;
+                width: 25rem;
+            }
+
+            &:nth-child(6),
+            &:nth-child(11),
+            &:nth-child(12) {
+                text-align: right;
+            }
+
+
+            // position column width
+            &:nth-child(2) {
+                padding: 0 0.25rem 0;
+            }
+
+            // arrow column width
+            &:nth-child(3) {
+                padding: 0;
+            }
+
+
+            // highlighted columns
+            &:nth-child(2),
+            &:nth-child(4),
+            &:nth-child(6),
+            &:nth-child(12) {
+                color: black;
+            }
+        }
+
+        // colour placements (ucl, uel, uecl, relpo, rel)
+        .colouredCell {
+            width: 3px;
+            padding: 0;
+        }
 
         // ucl
         &:nth-child(1),
@@ -80,71 +100,40 @@
                 background-color: #df1616;
             }
         }
-    }
-
-    tbody tr .colouredCell {
-        width: 3px;
-        padding: 0;
-    }
 
 
-
-
-    // arrow colours
-    tbody tr .colourPos svg {
-        color: variables.$positive-colour;
-    }
-
-    tbody tr .colourNeg svg {
-        color: variables.$negative-colour;
-    }
-
-    // position column width
-    tbody tr td {
-        &:nth-child(2) {
-            padding: 0 0.25rem 0;
+        // arrow colours
+        .colourPos svg {
+            color: variables.$positive-colour;
         }
-    }
 
-    // arrow column width
-    tbody tr td {
-        &:nth-child(3) {
-            padding: 0;
+        .colourNeg svg {
+            color: variables.$negative-colour;
         }
-    }
 
-    // team icons
-    tbody tr .teamIcons {
-        padding: 0.5rem 0.125rem 0.5rem;
-        margin-top: 1rem;
+        // team icons
+        .teamIcons {
+            padding: 0.5rem 0.125rem 0.5rem;
+            margin-top: 1rem;
 
-        // display: inline;
-        img {
-            height: 2rem;
+            // display: inline;
+            img {
+                height: 2rem;
+            }
         }
-    }
 
-    // goal diff colours
-    tbody tr .colourPos {
-        color: variables.$positive-colour;
-    }
 
-    tbody tr .colourNeg {
-        color: variables.$negative-colour;
-    }
-
-    // highlighted columns
-    tbody tr td {
-
-        &:nth-child(2),
-        &:nth-child(4),
-        &:nth-child(6),
-        &:nth-child(12) {
-            color: black;
+        // goal diff colours
+        .colourPos {
+            color: variables.$positive-colour;
         }
-    }
 
-    tbody tr {
+        .colourNeg {
+            color: variables.$negative-colour;
+        }
+
+
+        // slightly delayed cursor highlight
         -webkit-transition: 0.075s 0.075s;
 
         &:hover {
