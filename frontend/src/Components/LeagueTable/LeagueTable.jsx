@@ -5,36 +5,7 @@ import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 
-import CalculateLeague from "../CalculateLeague/CalculateLeague";
-
 import styles from './LeagueTable.module.scss'
-
-// async function fetchAsync(url) {
-//     try {
-//         let response = await fetch(url);
-//         let data = await response.json();
-//         return data;
-//     } catch (error) {
-//         console.log(error.message);
-//         return null;
-//     }
-// }
-
-
-// const url = "http://localhost:3000/api/bulitable";
-
-// function FetchData(dataUrl) {
-//     const [dbdata, setdbData] = useState([]);
-
-//     useEffect(() => {
-//         fetch(dataUrl)
-//             .then(response => response.json())
-//             .then(data => setdbData(data))
-//             .catch(err => console.log(err))
-//     }, [])
-
-//     return dbdata;
-// }
 
 function FillCells({ p }) {
     var cname = '';

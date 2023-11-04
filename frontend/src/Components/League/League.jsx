@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 
 import LeagueTable from '../LeagueTable/LeagueTable';
 
-function CalculateLeague({ data }) {
+function League({ data }) {
     const [matchday, setMatchday] = useState(undefined);
     const [sentData, setSentData] = useState(null);
     var dropdownMenu = [];
@@ -72,4 +72,4 @@ function CalculateLeague({ data }) {
 
 }
 
-export default CalculateLeague
+export default League
