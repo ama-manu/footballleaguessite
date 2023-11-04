@@ -5,13 +5,16 @@ import LeagueTable from '../LeagueTable/LeagueTable';
 function CalculateLeague({ data }) {
     const [matchday, setMatchday] = useState(undefined);
     const [sentData, setSentData] = useState(null);
+    var dropdownMenu = [];
+    var defaultOption = undefined;
+    var dataLength = 0;
 
     const updateMatchday = (md) => {
         setMatchday(md);
     }
 
     useEffect(() => {
-        console.log(matchday);
+        // console.log(matchday);
         const selectMatchdayFromData = async () => {
             try {
                 var tempData;
@@ -28,6 +31,32 @@ function CalculateLeague({ data }) {
         };
 
         selectMatchdayFromData();
+
+        // (async () => {
+        //     // dropdown menu
+        //     // console.log(await data.length);
+        //     // dataLength = await data.length;
+        //     // for (var i = 1; i <= await dataLength; i++) {
+        //     //     await dropdownMenu.push({
+        //     //         value: i,
+        //     //         label: `${i}`
+        //     //     });
+        //     // };
+        //     // defaultOption = await dropdownMenu.at(-1);
+        //     var i = 0;
+        //     for (let elem of data) {
+        //         try {
+        //             i++;
+        //             dropdownMenu.push({
+        //                 value: i,
+        //                 label: `${i}`
+        //             });
+        //         } catch (error) {
+        //             console.log("Error calculating dropdown menu: ", error);
+        //         }
+        //     }
+        // })()
+
     }, [data, matchday]);
 
 
@@ -35,11 +64,9 @@ function CalculateLeague({ data }) {
 
 
     return (
-        // <p></p>  
-        // setMatchday={setMatchday}      
         <>
             {/* <button onClick={() => setMatchday(5)}>HALLLOOO</button> */}
-            <LeagueTable data={sentData} setMatchday={updateMatchday} />
+            <LeagueTable data={sentData} setMatchday={updateMatchday} /*dropdownMenu={dropdownMenu} defaultOption={defaultOption}*/ />
         </>
     )
 

@@ -75,8 +75,7 @@ function FillCells({ p }) {
 }
 
 
-function LeagueTable({ data, setMatchday }) {
-    
+function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
     //invalid data in case no data is sent
     if (!data) {
         // retVal = <div>Loading ...</div>
@@ -94,7 +93,6 @@ function LeagueTable({ data, setMatchday }) {
             "points": 0
         }
     }
-    // var tempData = data;
  
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
     const columns = [
@@ -146,20 +144,10 @@ function LeagueTable({ data, setMatchday }) {
     // table data
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
-    // dropdown menu
-    var dropdownMenu = [];
-    for(var i = 1; i <= data.length; i++) {
-        dropdownMenu.push({
-            value: i,
-            label: `${i}`
-        });
-    }
-    const defaultOption = dropdownMenu.at(-1);
-
     return (
         <>
         {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
-        <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" />
+        {/* <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" /> */}
         <table className={styles.table}>
             <thead>
                 {table?.getHeaderGroups().map(headerGroup => (
