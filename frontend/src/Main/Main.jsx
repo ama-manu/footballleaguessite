@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react'
+
+import Base from '../Components/Base/Base.jsx'
 import Chart from '../Components/Chart/Chart.jsx'
 import League from '../Components/League/League.jsx'
 
@@ -67,8 +69,6 @@ function fillNotYetPlayedMatches(tables) {
             };
         });
     }
-    
-    
 }
 
 // league matchday calculations
@@ -158,6 +158,15 @@ async function calcLeague(matches) {
         sortLeagueTable(table);
     });
 
+    // replace union logo
+    tables.forEach(table => {
+        table.forEach(team => {
+            if (team.shortName === "Union Berlin") {
+                team.teamIconUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg';
+            }
+        });
+    });
+
     // calculate position movements
     return calcPosChange(tables);
 }
@@ -183,9 +192,9 @@ function Main() {
     }, []);
 
     return (
-        <div className={styles.base}>
+        <Base>
             <League data={data} />
-        </div>
+        </Base>
     )
 }
 
