@@ -129,8 +129,8 @@ $breakpoints: variables.$resolution-breakpoints;
 
             // display: inline;
             img {
-                height: 1.75rem;
-                width: 1.75rem;
+                max-height: 1.75rem;
+                max-width: 1.75rem;
             }
         }
 
