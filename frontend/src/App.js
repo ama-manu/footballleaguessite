@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Main from './Main/Main.jsx';
+import Header from './Components/Header/Header.jsx'
+import League from './Components/League/League.jsx';
 
 import logo from './logo.svg';
 import './App.css';
@@ -8,8 +9,9 @@ import './App.css';
 function App() {
   return (
     <BrowserRouter>
+      <Header></Header>
       <Routes>
-        <Route path='/' element={<Main />} />
+        <Route path='/' element={<League />} />
       </Routes>
       {/* <Main></Main> */}
     </BrowserRouter>

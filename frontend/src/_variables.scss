@@ -2,13 +2,16 @@
 $main-colour: white;
 
 // $background-colour: #f1f1f1;
-// $background-colour: #b80000;
+$primary-colour: #b80000;
 // $background-colour: #242424;
 $background-colour: rgb(240, 240, 240);
 
-$shadow-colour: #cacaca;
+$shadow-colour: #d3d3d3;
 
 $positive-colour: rgb(0, 185, 0);
 $negative-colour: red;
 
 $resolution-breakpoints: (phone: 630px);
+
+$headerbar: 5rem;
+$footer: 5rem;
