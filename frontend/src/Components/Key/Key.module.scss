@@ -1,0 +1,54 @@
+@use '../../variables.scss';
+
+.key {
+    display: flex;
+    text-align: left;
+
+    background-color: variables.$main-colour;
+
+    @include variables.Nanum-Gothic;
+
+    .box {
+        margin: 0 auto;
+        // width: calc(40% - 1rem);
+        width: 40%;
+
+        h1 {
+            font-size: 80%;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            li {
+                align-items: center;
+                height: 2rem;
+                font-size: 70%;
+                display: flex;
+            }
+        }
+
+    }
+
+    .colourbox {
+        width: 3px;
+        height: 80%;
+        margin-right: 0.25rem;
+    }
+
+    .ucl {
+        background-color: variables.$ucl-colour;
+    }
+    .uel {
+        background-color: variables.$uel-colour;
+    }
+    .uecl {
+        background-color: variables.$uecl-colour;
+    }
+    .relpo {
+        background-color: variables.$relpo-colour;
+    }
+    .rel {
+        background-color: variables.$rel-colour;
+    }
+}

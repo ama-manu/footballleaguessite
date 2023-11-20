@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Base from '../Base/Base.jsx'
 import Chart from '../Chart/Chart.jsx'
 import SelectMatchday from '../SelectMatchday/SelectMatchday.jsx'
+import Key from '../Key/Key.jsx'
 
 import styles from './League.module.scss'
 
@@ -197,6 +198,7 @@ function League() {
             <div className={styles.league}>
                 <img className={styles.leagueImg} src='https://www.bundesliga.com/assets/logo/bundesliga_pos.svg'></img>
                 <SelectMatchday data={data} />
+                <Key></Key>
             </div>
         </Base>
     )
