@@ -68,6 +68,8 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
 
     var isMobile = useMediaQuery({ query: `(max-width: 630px)` });
     var reactiveTeamName = isMobile ? 'shortName' : 'teamName';
+    var reactivePointsHeader = isMobile ? 'Pkt' : 'Punkte';
+    var reactiveMatchesHeader = isMobile ? 'Sp' : 'Spiele';
 
     /** @type import('@tanstack/react-table).ColumnDef<any>*/
     const columns = [
@@ -86,7 +88,7 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
             accessorKey: reactiveTeamName
         },
         {
-            header: 'Spiele',
+            header: reactiveMatchesHeader,
             accessorKey: 'matches'
         },
         {
@@ -112,7 +114,7 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
             accessorFn: (row => (row.goalDiff < 1 ? "" : "+") + row.goalDiff)   // add + infront of numbers > 0
         },
         {
-            header: 'Punkte',
+            header: reactivePointsHeader,
             accessorKey: 'points'
         }
     ]
@@ -121,24 +123,24 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
     if (isMobile) {
         columns.splice(-2, 1);
     } else {
-        if (!(columns.find((obj) => { // check if goalDiff not yet included in columns
-            return obj.header === 'D';
-        }))) {
-            columns.pop();  // remove last object from array
-            columns.push(
-                {
-                    header: 'D',
-                    // accessorKey: 'goalDiff'
-                    accessorFn: (row => (row.goalDiff < 1 ? "" : "+") + row.goalDiff)   // add + infront of numbers > 0
-                }
-            );  // add goalDiff
-            columns.push(
-                {
-                    header: 'Punkte',
-                    accessorKey: 'points'
-                }   
-            );  // re-add last item
-        }
+        // if (!(columns.find((obj) => { // check if goalDiff not yet included in columns
+        //     return obj.header === 'D';
+        // }))) {
+        //     columns.pop();  // remove last object from array
+        //     columns.push(
+        //         {
+        //             header: 'D',
+        //             // accessorKey: 'goalDiff'
+        //             accessorFn: (row => (row.goalDiff < 1 ? "" : "+") + row.goalDiff)   // add + infront of numbers > 0
+        //         }
+        //     );  // add goalDiff
+        //     columns.push(
+        //         {
+        //             header: 'Punkte',
+        //             accessorKey: 'points'
+        //         }   
+        //     );  // re-add last item
+        // }
     }
 
     // table data
