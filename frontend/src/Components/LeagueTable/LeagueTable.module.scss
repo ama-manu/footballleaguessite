@@ -11,6 +11,8 @@ $breakpoints: variables.$resolution-breakpoints;
     color: #7a7a7a;
     background-color: white;
 
+    // font (inmporting mixin from variables)
+    @include variables.Nanum-Gothic;
     font-size: 85%;
 
     thead {

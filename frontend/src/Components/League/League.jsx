@@ -193,7 +193,11 @@ function League() {
 
     return (
         <Base>
-            <SelectMatchday data={data} />
+            {/* <h1 className={styles.league}>Bundesliga</h1> */}
+            <div className={styles.league}>
+                <img className={styles.leagueImg} src='https://www.bundesliga.com/assets/logo/bundesliga_pos.svg'></img>
+                <SelectMatchday data={data} />
+            </div>
         </Base>
     )
 }
