@@ -1,8 +1,31 @@
 import React from 'react'
+import { useMediaQuery } from 'react-responsive';
 
 import styles from './Key.module.scss'
 
+function TableKey(tableKey) {
+    // tableKeyHTML
+    return (
+        <div></div>
+    )
+}
+
 function Key() {
+    var isMobile = useMediaQuery({ query: `(max-width: 630px)` });
+
+    var tableKey = isMobile ? [
+        'Sp Spiele',
+        'S Siege',
+        'U Unentschieden',
+        'N Niederlagen',
+        'Pkt Punkte'
+    ] : [
+        'S Siege',
+        'U Unentschieden',
+        'N Niederlagen',
+        'D Tordifferenz'
+    ]
+
     return (
         <div className={styles.key}>
             <div className={styles.box}>
@@ -34,10 +57,15 @@ function Key() {
             <div className={styles.box}>
                 <h1>Legende</h1>
                 <ul>
+                    {/* <li>Sp Spiele</li>
                     <li>S Siege</li>
                     <li>U Unentschieden</li>
                     <li>N Niederlagen</li>
                     <li>D Tordifferenz</li>
+                    <li>Pkt Punkte</li> */}
+                    {tableKey.map(keyElement =>
+                        <li>{keyElement}</li>
+                    )}
                 </ul>
             </div>
         </div>
