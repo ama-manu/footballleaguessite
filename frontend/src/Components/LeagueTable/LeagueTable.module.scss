@@ -82,28 +82,28 @@ $breakpoints: variables.$resolution-breakpoints;
         &:nth-child(3),
         &:nth-child(4) {
             .colouredCell {
-                background-color: green;
+                background-color: variables.$ucl-colour;
             }
         }
 
         // uel
         &:nth-child(5) {
             .colouredCell {
-                background-color: #4bcffc;
+                background-color: variables.$uel-colour;
             }
         }
 
         // uecl
         &:nth-child(6) {
             .colouredCell {
-                background-color: #95e3fd;
+                background-color: variables.$uecl-colour;
             }
         }
 
         // relpo
         &:nth-child(16) {
             .colouredCell {
-                background-color: #ffbb00;
+                background-color: variables.$relpo-colour;
             }
         }
 
@@ -111,7 +111,7 @@ $breakpoints: variables.$resolution-breakpoints;
         &:nth-child(17),
         &:nth-child(18) {
             .colouredCell {
-                background-color: #df1616;
+                background-color: variables.$rel-colour;
             }
         }
 

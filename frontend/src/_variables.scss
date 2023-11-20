@@ -1,3 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@800&display=swap');
+
+@mixin Nanum-Gothic {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+@mixin Encode-Sans {
+  font-family: 'Encode Sans', sans-serif;
+}
+
+
+
 // $main-colour: #eeeeee;
 $main-colour: white;
 
@@ -16,13 +29,8 @@ $resolution-breakpoints: (phone: 630px);
 $headerbar: 3rem;
 $footer: 5rem;
 
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@800&display=swap');
-
-@mixin Nanum-Gothic {
-  font-family: 'Nanum Gothic', sans-serif;
-}
-
-@mixin Encode-Sans {
-  font-family: 'Encode Sans', sans-serif;
-}
+$ucl-colour: green;
+$uel-colour: #4bcffc;
+$uecl-colour: #95e3fd;
+$relpo-colour: #ffbb00;
+$rel-colour: #df1616;
