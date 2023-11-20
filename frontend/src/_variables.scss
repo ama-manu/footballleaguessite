@@ -13,5 +13,16 @@ $negative-colour: red;
 
 $resolution-breakpoints: (phone: 630px);
 
-$headerbar: 5rem;
+$headerbar: 3rem;
 $footer: 5rem;
+
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Encode+Sans:wght@800&display=swap');
+
+@mixin Nanum-Gothic {
+  font-family: 'Nanum Gothic', sans-serif;
+}
+
+@mixin Encode-Sans {
+  font-family: 'Encode Sans', sans-serif;
+}

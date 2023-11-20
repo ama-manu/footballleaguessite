@@ -1,0 +1,51 @@
+@use '../../variables.scss';
+
+.title {
+    height: variables.$headerbar;
+
+    background-color: white;
+
+    position: sticky;
+    top: 0;
+
+    z-index: 1000;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    filter: drop-shadow(0 0 5px variables.$shadow-colour);
+
+    // title
+    a {
+        margin: 1rem;
+
+        @include variables.Encode-Sans;
+        text-decoration: none;
+        font-style: italic;
+        font-size: 150%;
+        color: variables.$primary-colour;
+    }
+}
+
+.leagues {
+    margin: 5px;
+    height: 100%;
+
+    // text-align: center;
+        ul {
+            margin: 0 auto;
+            padding: 0;
+            list-style-type: none;
+            display: flex;
+            width: fit-content;
+
+
+
+            li {
+                margin: 0 5px;
+            }
+
+        }
+
+}
