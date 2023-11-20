@@ -26,6 +26,7 @@ $breakpoints: variables.$resolution-breakpoints;
             // align text
             text-align: center;
             white-space: nowrap;
+            // line-height: 1rem;
 
             // text padding based on screen width
             @include media(">phone") {
@@ -35,7 +36,7 @@ $breakpoints: variables.$resolution-breakpoints;
             @include media("<=phone") {
                 padding: 0.75rem 0.5rem;
             }
-            
+
 
             &:nth-child(5) {
                 text-align: left;
@@ -127,12 +128,19 @@ $breakpoints: variables.$resolution-breakpoints;
         // team icons
         .teamIcons {
             padding: 0.5rem 0.125rem 0.5rem;
-            margin-top: 1rem;
+            // margin-top: 1rem;
+            // margin-bottom: 1rem;
+            // margin: 0.5rem 0.125rem 0.5rem;
+
+            height: 1.75rem;
 
             // display: inline;
             img {
-                max-height: 1.75rem;
-                max-width: 1.75rem;
+                // height: auto;
+
+
+                max-height: 1.5rem;
+                max-width: 1.5rem;
             }
         }
 
