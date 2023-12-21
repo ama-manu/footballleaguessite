@@ -8,7 +8,10 @@
 
     @include variables.Nanum-Gothic;
 
+    padding-top: 1.25rem;
+
     .box {
+        
         margin: 0 auto;
         // width: calc(40% - 1rem);
         width: 40%;
@@ -18,6 +21,7 @@
         }
 
         ul {
+            color: variables.$text-colour;
             list-style: none;
             padding: 0;
             li {
