@@ -67,7 +67,20 @@ function fillNotYetPlayedMatches(tables) {
         tables[i].forEach(team => {
             if (tables[i + 1].find(x => x.teamName === team.teamName) === undefined) {
                 tables[i + 1].push(team);
-            };
+            }
+        });
+    }
+}
+
+function addMissingMatchdays(tables) {
+    for (var i = 0; i < tables.length - 1; i++) {
+        tables[i].forEach(team => {
+            if ((tables[i + 1].find(x => x.teamName === team.teamName)) === undefined) {
+                // console.log(team, tables[i + 1].find(x => x.teamName === team.teamName), [...tables[i + 1]]);
+                var tempTeam = new buliTeam(team.teamName, team.shortName, team.teamIconUrl, 0, 0, "", team.goals, team.opponentGoals, 0, 0, 0, 0, 0);
+                tables[i + 1].push(tempTeam);
+                // console.log("ok", tables[i + 1]);
+            }
         });
     }
 }
@@ -107,8 +120,10 @@ async function calcLeague(matches) {
         }
 
         // construct teams
-        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
-        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
+        // var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
+        // var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
+        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, 1, 0, 0, 0, 0);
+        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, 1, 0, 0, 0, 0);
 
         // calculate points
         if (pointsTeam1 > pointsTeam2) {
@@ -133,14 +148,27 @@ async function calcLeague(matches) {
 
     });
 
+    addMissingMatchdays(tables);
+
     // add up stats
     // select table, first matchday doesnt need adding up
     for (var i = 1; i < tables.length; i++) {
         // select team
         tables[i].forEach(team => {
             // add up stats from previous matchday
-            const teamPre = tables[i - 1].find(x => (x.teamName === team.teamName) && (team.matches === (x.matches + 1)));
-            if ((team.teamName === teamPre.teamName) && (team.matches === (teamPre.matches + 1))) {
+            // const teamPre = tables[i - 1].find(x => (x.teamName === team.teamName) && (team.matches === (x.matches + 1)));
+            // if ((team.teamName === teamPre.teamName) && (team.matches === (teamPre.matches + 1))) {
+            //     team.points += teamPre.points;
+            //     team.opponentGoals += teamPre.opponentGoals;
+            //     team.goals += teamPre.goals;
+            //     team.won += teamPre.won;
+            //     team.lost += teamPre.lost;
+            //     team.draw += teamPre.draw;
+            //     team.goalDiff = team.goals - team.opponentGoals;
+            // }
+
+            const teamPre = tables[i - 1].find(x => (x.teamName === team.teamName));
+            if ((team.teamName === teamPre.teamName)) {
                 team.points += teamPre.points;
                 team.opponentGoals += teamPre.opponentGoals;
                 team.goals += teamPre.goals;
@@ -148,11 +176,12 @@ async function calcLeague(matches) {
                 team.lost += teamPre.lost;
                 team.draw += teamPre.draw;
                 team.goalDiff = team.goals - team.opponentGoals;
+                team.matches = team.won + team.lost + team.draw;
             }
         });
     }
 
-    fillNotYetPlayedMatches(tables);
+    // fillNotYetPlayedMatches(tables);
 
     // sort tables
     tables.forEach(table => {
