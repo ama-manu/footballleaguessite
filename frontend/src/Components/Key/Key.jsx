@@ -10,7 +10,7 @@ function TableKey(tableKey) {
     )
 }
 
-function Key() {
+function Key({ league }) {
     var isMobile = useMediaQuery({ query: `(max-width: 630px)` });
 
     var tableKey = isMobile ? [
@@ -31,19 +31,31 @@ function Key() {
             <div className={styles.box}>
                 <h1>Qualifikation/Relegation</h1>
                 <ul>
-                    <li>
-                        <div className={`${styles.colourbox} ${styles.ucl}`}></div>
-                        <div>UEFA Champions League</div>
-                    </li>
-                    <li>
-                        <div className={`${styles.colourbox} ${styles.uel}`}></div>
-                        <div>UEFA Europa League
-                        </div>
-                    </li>
-                    <li>
-                        <div className={`${styles.colourbox} ${styles.uecl}`}></div>
-                        <div>UEFA Europa Conference League</div>
-                    </li>
+                    {league.topLeague ?
+                        <>
+                            <li>
+                                <div className={`${styles.colourbox} ${styles.ucl}`}></div>
+                                <div>UEFA Champions League</div>
+                            </li>
+                            <li>
+                                <div className={`${styles.colourbox} ${styles.uel}`}></div>
+                                <div>UEFA Europa League
+                                </div>
+                            </li>
+                            <li>
+                                <div className={`${styles.colourbox} ${styles.uecl}`}></div>
+                                <div>UEFA Europa Conference League</div>
+                            </li>
+                        </>
+                        : <li>
+                            <div className={`${styles.colourbox} ${styles.ucl}`}></div>
+                            <div>Aufstieg</div>
+                        </li>
+                    }
+
+
+
+
                     <li>
                         <div className={`${styles.colourbox} ${styles.relpo}`}></div>
                         <div>Relegation</div>
