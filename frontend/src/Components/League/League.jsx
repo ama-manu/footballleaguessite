@@ -203,7 +203,12 @@ async function calcLeague(matches) {
 
 function League() {
 
-    var url_bulimatches = "https://api.openligadb.de/getmatchdata/bl1/2023";
+    const league = {
+        topLeague: true,
+        name: "bl1"
+    };
+    var url_bulimatches = "https://api.openligadb.de/getmatchdata/" + league.name + "/2023";
+
     const [data, setData] = useState(null);
 
     useEffect(() => {
@@ -226,8 +231,8 @@ function League() {
             {/* <h1 className={styles.league}>Bundesliga</h1> */}
             <div className={styles.league}>
                 <img className={styles.leagueImg} src='https://www.bundesliga.com/assets/logo/bundesliga_pos.svg'></img>
-                <SelectMatchday data={data} />
-                <Key></Key>
+                <SelectMatchday data={data} league={league}/>
+                <Key league={league}></Key>
             </div>
         </Base>
     )

@@ -47,7 +47,7 @@ function FillCells({ p }) {
 }
 
 
-function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
+function LeagueTable({ data, setMatchday, league/*dropdownMenu, defaultOption*/ }) {
     //invalid data in case no data is sent
     if (!data) {
         // retVal = <div>Loading ...</div>
@@ -150,7 +150,9 @@ function LeagueTable({ data, setMatchday, /*dropdownMenu, defaultOption*/ }) {
         <>
             {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
             {/* <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" /> */}
+            {/* <div>{league.name}</div> */}
             <table className={styles.table}>
+                
                 <thead>
                     {table?.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
