@@ -1,0 +1,68 @@
+const leagues = [
+    {
+        country: 'Deutschland',
+        internalURL: 'de',
+        submenu: [
+            {
+                league: '1. Bundesliga',
+                topLeague: true,
+                internalURL: 'bl1',
+                externalURL: 'https://api.openligadb.de/getmatchdata/bl1/2023',
+                ucl: 4,
+                uel: 1,
+                uecl: 1,
+                up: 0,
+                relup: 0,
+                reldown: 1,
+                down: 2,
+            },
+            {
+                league: '2. Bundesliga',
+                topLeague: false,
+                internalURL: 'bl2',
+                externalURL: 'https://api.openligadb.de/getmatchdata/bl2/2023',
+                ucl: 0,
+                uel: 0,
+                uecl: 0,
+                up: 2,
+                relup: 1,
+                reldown: 1,
+                down: 2,
+            },
+            {
+                league: '3. Bundesliga',
+                topLeague: false,
+                internalURL: 'bl3',
+                externalURL: 'https://api.openligadb.de/getmatchdata/bl3/2023',
+                ucl: 0,
+                uel: 0,
+                uecl: 0,
+                up: 2,
+                relup: 1,
+                reldown: 0,
+                down: 4,
+            },
+        ],
+    },
+    {
+        country: 'Österreich',
+        internalURL: 'at',
+        submenu: [
+            {
+                league: 'Bundesliga',
+                topLeague: true,
+                internalURL: 'bl1',
+                externalURL: 'https://api.openligadb.de/getmatchdata/öbl1/2023',
+                ucl: 1,
+                uel: 0,
+                uecl: 0,
+                up: 0,
+                relup: 0,
+                reldown: 0,
+                down: 1,
+            },
+        ],
+    },
+];
+
+export default leagues;
