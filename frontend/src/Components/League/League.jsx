@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import arraySort from 'array-sort'
 
 import Base from '../Base/Base.jsx'
 import Chart from '../Chart/Chart.jsx'
@@ -7,7 +8,7 @@ import Key from '../Key/Key.jsx'
 
 import styles from './League.module.scss'
 
-// team object constructor funciton
+// team object constructor function
 function buliTeam(teamName, shortName, teamIconUrl, points, position, posChange, opponentGoals, goals, matches, won, lost, draw, goalDiff) {
     this.teamName = teamName;
     this.shortName = shortName;
@@ -92,19 +93,29 @@ async function calcLeague(matches) {
     // console.log(matches);
     matches.forEach(match => {
         if (match.matchIsFinished === true) {
+            // console.log(match);
             finishedMatches.push(match);
         }
     });
 
+    // sort matches by matchdays
+    var sortedMatches = arraySort(finishedMatches, 'matchID');
+
     // set up empty tables for all matchdays
-    var tables = [...Array(finishedMatches.at(-1).group.groupOrderID)].map(e => []);
+    var tables = [...Array(sortedMatches.at(-1).group.groupOrderID)].map(e => []);
 
     // calculate points for each team per matchday
-    finishedMatches.forEach(match => {
+    sortedMatches.forEach(match => {
         // extract points
-        const pointsTeam1 = match.matchResults[1].pointsTeam1;
-        const pointsTeam2 = match.matchResults[1].pointsTeam2;
+        var pointsTeam1;
+        var pointsTeam2;
 
+        match.matchResults.map((results) => {
+            if (results.resultName == "Endergebnis") {
+                pointsTeam1 = results.pointsTeam1;
+                pointsTeam2 = results.pointsTeam2;
+            }
+        });
 
         // sort goals by time
         var sortedGoals = match.goals.sort((a, b) => {
@@ -141,11 +152,9 @@ async function calcLeague(matches) {
             newTeam2.draw = 1;
         }
 
-
         // add teams to matchday tables
         tables[match.group.groupOrderID - 1].push(newTeam1);
         tables[match.group.groupOrderID - 1].push(newTeam2);
-
     });
 
     addMissingMatchdays(tables);
@@ -179,6 +188,7 @@ async function calcLeague(matches) {
                 team.matches = team.won + team.lost + team.draw;
             }
         });
+        
     }
 
     // fillNotYetPlayedMatches(tables);
@@ -197,26 +207,36 @@ async function calcLeague(matches) {
         });
     });
 
+    // tables.map((table) => {
+    //     table.map((tream) => {
+    //         if (tream.teamName == "Hertha BSC") {
+    //             console.log(tream);
+    //         }
+    //     })
+    // })
+
     // calculate position movements
     return calcPosChange(tables);
 }
 
-function League() {
+function League({ league }) {
 
-    const league = {
-        topLeague: true,
-        name: "bl1"
-    };
-    var url_bulimatches = "https://api.openligadb.de/getmatchdata/" + league.name + "/2023";
+    // const league = {
+    //     topLeague: true,
+    //     name: "bl1"
+    // };
+    // var url_bulimatches = "https://api.openligadb.de/getmatchdata/" + league.name + "/2023";
 
     const [data, setData] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(url_bulimatches);
+                // const response = await fetch(url_bulimatches);
+                const response = await fetch(league.externalURL);
                 const result = await response.json();
                 const fresult = await calcLeague(result);
+                // await console.log(fresult);
                 setData(fresult);
             } catch (error) {
                 console.error("Error fetching data: ", error);
@@ -224,17 +244,18 @@ function League() {
         };
 
         fetchData();
-    }, [url_bulimatches]);
+        // }, [url_bulimatches]);
+    }, [league.externalURL]);
 
+
+    {/* <h1 className={styles.league}>Bundesliga</h1> */ }
     return (
-        <Base>
-            {/* <h1 className={styles.league}>Bundesliga</h1> */}
-            <div className={styles.league}>
-                <img className={styles.leagueImg} src='https://www.bundesliga.com/assets/logo/bundesliga_pos.svg'></img>
-                <SelectMatchday data={data} league={league}/>
-                <Key league={league}></Key>
-            </div>
-        </Base>
+        < div className={styles.league} >
+            <img className={styles.leagueImg} src='https://www.bundesliga.com/assets/logo/bundesliga_pos.svg'></img>
+            <SelectMatchday data={data} league={league} />
+            <Key league={league}></Key>
+        </div >
+
     )
 }
 
