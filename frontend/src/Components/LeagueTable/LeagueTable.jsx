@@ -26,6 +26,9 @@ function FillCells({ p }) {
     } else if (p.getContext().getValue() === "down") {
         cname = styles.colourNeg;
         content = <RiArrowDownSLine />
+    } else {
+        // applies to all cells, must be overwritten if needed
+        cname = styles.noArrow;
     }
 
     // add icons

@@ -26,30 +26,72 @@ $breakpoints: variables.$resolution-breakpoints;
             // align text
             text-align: center;
             white-space: nowrap;
+            // table-layout:fixed;
             // line-height: 1rem;
 
             // text padding based on screen width
             @include media(">phone") {
                 padding: 0.75rem 1rem;
+
+                // max&min width for S U N D
+                &:nth-child(7),
+                &:nth-child(8),
+                &:nth-child(9) {
+                    min-width: 1rem;
+                    max-width: 1rem;
+                }
+
+                // highlighted columns
+                &:nth-child(2),
+                &:nth-child(6),
+                &:nth-child(12) {
+                    color: black;
+                }
+
+
+                &:nth-child(6),
+                &:nth-child(11),
+                &:nth-child(12) {
+                    text-align: right;
+                }
+
+                &:nth-child(11) {
+                    width: 1.5rem;
+                    // text-align: right;
+                }
             }
 
             @include media("<=phone") {
                 padding: 0.75rem 0.5rem;
                 font-size: 90%;
+
+                // max&min width for S U N D
+                &:nth-child(7),
+                &:nth-child(8),
+                &:nth-child(9) {
+                    min-width: 1rem;
+                    max-width: 1rem;
+                }
+
+                // highlighted columns
+                &:nth-child(2),
+                &:nth-child(6),
+                &:nth-child(11) {
+                    color: black;
+                }
+
+                &:nth-child(6),
+                &:nth-child(11) {
+                    text-align: right;
+                }
             }
 
 
             &:nth-child(5) {
                 text-align: left;
                 width: 25rem;
+                // max-width: 4.1rem;
             }
-
-            &:nth-child(6),
-            &:nth-child(11),
-            &:nth-child(12) {
-                text-align: right;
-            }
-
 
             // position column width
             &:nth-child(2) {
@@ -62,13 +104,7 @@ $breakpoints: variables.$resolution-breakpoints;
             }
 
 
-            // highlighted columns
-            &:nth-child(2),
-            &:nth-child(4),
-            &:nth-child(6),
-            &:nth-child(12) {
-                color: black;
-            }
+
         }
 
         // colour placements (ucl, uel, uecl, relpo, rel)
@@ -126,6 +162,11 @@ $breakpoints: variables.$resolution-breakpoints;
             color: variables.$negative-colour;
         }
 
+        // mind width in case no arrow is present in whole table
+        .noArrow {
+            min-width: 13.6px;
+        }
+
         // team icons
         .teamIcons {
             padding: 0.3rem 0.125rem 0.3rem;
@@ -137,6 +178,7 @@ $breakpoints: variables.$resolution-breakpoints;
 
             @include media(">phone") {
                 height: 1.75rem;
+
                 img {
                     // margin: 0 auto;
                     max-height: 1.5rem;
@@ -146,6 +188,7 @@ $breakpoints: variables.$resolution-breakpoints;
 
             @include media("<=phone") {
                 height: 1.5rem;
+
                 img {
                     // margin: 0 auto;
                     max-height: 1.25rem;
