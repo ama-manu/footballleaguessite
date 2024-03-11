@@ -39,7 +39,7 @@ function App() {
         <Route exact path='/de/bl2' element={<Base> <League league={Leagues[0].submenu[1]}></League> </Base>} />
         <Route exact path='/de/bl3' element={<Base> <League league={Leagues[0].submenu[2]}></League> </Base>} />
 
-        <Route exact path='/at/bl1' element={<Base> <League league={Leagues[1].submenu[0]}></League> </Base>} />
+        {/* <Route exact path='/at/bl1' element={<Base> <League league={Leagues[1].submenu[0]}></League> </Base>} /> */}
 
         {/* {console.log("/" + Leagues[0].internalURL + "/" + Leagues[0].submenu[0].internalURL)} */}
         {/* {Leagues.map((curCountry) => {
