@@ -264,7 +264,7 @@ function League({ league }) {
     {/* <h1 className={styles.league}>Bundesliga</h1> */ }
     return (
         < div className={styles.league} >
-            <img className={styles.leagueImg} src='https://www.bundesliga.com/assets/logo/bundesliga_pos.svg'></img>
+            <img className={styles.leagueImg} src={league.logoURL}></img>
             <SelectMatchday data={data} league={league} />
             <Key league={league}></Key>
         </div >
