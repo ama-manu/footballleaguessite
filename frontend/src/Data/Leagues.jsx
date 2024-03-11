@@ -8,6 +8,7 @@ const leagues = [
                 topLeague: true,
                 internalURL: 'bl1',
                 externalURL: 'https://api.openligadb.de/getmatchdata/bl1/2023',
+                size: 18,
                 ucl: 4,
                 uel: 1,
                 uecl: 1,
@@ -21,6 +22,7 @@ const leagues = [
                 topLeague: false,
                 internalURL: 'bl2',
                 externalURL: 'https://api.openligadb.de/getmatchdata/bl2/2023',
+                size: 18,
                 ucl: 0,
                 uel: 0,
                 uecl: 0,
@@ -30,10 +32,11 @@ const leagues = [
                 down: 2,
             },
             {
-                league: '3. Bundesliga',
+                league: '3. Liga',
                 topLeague: false,
                 internalURL: 'bl3',
                 externalURL: 'https://api.openligadb.de/getmatchdata/bl3/2023',
+                size: 20,
                 ucl: 0,
                 uel: 0,
                 uecl: 0,
@@ -44,25 +47,25 @@ const leagues = [
             },
         ],
     },
-    {
-        country: 'Österreich',
-        internalURL: 'at',
-        submenu: [
-            {
-                league: 'Bundesliga',
-                topLeague: true,
-                internalURL: 'bl1',
-                externalURL: 'https://api.openligadb.de/getmatchdata/öbl1/2023',
-                ucl: 1,
-                uel: 0,
-                uecl: 0,
-                up: 0,
-                relup: 0,
-                reldown: 0,
-                down: 1,
-            },
-        ],
-    },
+    // {
+    //     country: 'Österreich',
+    //     internalURL: 'at',
+    //     submenu: [
+    //         {
+    //             league: 'Bundesliga',
+    //             topLeague: true,
+    //             internalURL: 'bl1',
+    //             externalURL: 'https://api.openligadb.de/getmatchdata/öbl1/2023',
+    //             ucl: 1,
+    //             uel: 0,
+    //             uecl: 0,
+    //             up: 0,
+    //             relup: 0,
+    //             reldown: 0,
+    //             down: 1,
+    //         },
+    //     ],
+    // },
 ];
 
 export default leagues;
