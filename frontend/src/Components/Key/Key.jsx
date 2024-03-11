@@ -57,11 +57,11 @@ function Key({ league }) {
 
 
                     <li>
-                        <div className={`${styles.colourbox} ${styles.relpo}`}></div>
+                        <div className={`${styles.colourbox} ${styles.rel}`}></div>
                         <div>Relegation</div>
                     </li>
                     <li>
-                        <div className={`${styles.colourbox} ${styles.rel}`}></div>
+                        <div className={`${styles.colourbox} ${styles.down}`}></div>
                         <div>Abstieg</div>
                     </li>
                 </ul>
