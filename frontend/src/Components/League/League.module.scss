@@ -1,13 +1,34 @@
 @use '../../variables';
+@import 'include-media/dist/_include-media.scss';
+
+$breakpoints: variables.$resolution-breakpoints;
 
 .league {
     margin: 0.75rem;
+    // padding: 0.75rem;
+    // min-width: 80%;
+    // max-width: 80%;
 
     text-align: center;
 
-    .leagueImg {
-        max-height: 4rem;
-        margin: 1rem 0;
-
+    @include media(">phone") {
+        .leagueImg {
+            max-height: 4rem;
+            min-height: 4rem;
+            margin: 1rem 0;
+            // width: max-content;
+        }
     }
+
+    
+    @include media("<=phone") {
+        // width: 30;
+        .leagueImg {
+            max-height: 3rem;
+            min-height: 3rem;
+            margin: 1rem 0;
+            width: calc(100vw - 1rem);
+        }
+    }
+
 }
