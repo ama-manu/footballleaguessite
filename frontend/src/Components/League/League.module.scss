@@ -5,6 +5,7 @@ $breakpoints: variables.$resolution-breakpoints;
 
 .league {
     margin: 0.75rem;
+    // padding: 0.75rem;
     // min-width: 80%;
     // max-width: 80%;
 
@@ -15,17 +16,18 @@ $breakpoints: variables.$resolution-breakpoints;
             max-height: 4rem;
             min-height: 4rem;
             margin: 1rem 0;
-            width: max-content;
+            // width: max-content;
         }
     }
 
     
     @include media("<=phone") {
+        // width: 30;
         .leagueImg {
             max-height: 3rem;
             min-height: 3rem;
             margin: 1rem 0;
-            width: 100%;
+            width: calc(100vw - 1rem);
         }
     }
 

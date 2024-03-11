@@ -52,26 +52,22 @@ function FillCells({ p }) {
 }
 
 function colouredCells(league, index) {
-    console.log(index);
     var topLength = 0;
     if (league.topLeague == true) {
         // ucl
         if (index < league.ucl) {
-            console.log("UCL");
             return (
                 <td className={`${styles.colouredCell} ${styles.colUCL}`}></td>
             )
         }
         // uel
         else if (index >= league.ucl && index < league.ucl + league.uel) {
-            console.log("UEL");
             return (
                 <td className={`${styles.colouredCell} ${styles.colUEL}`}></td>
             )
         }
         // uecl
         else if (index >= league.ucl + league.uel && index < league.ucl + league.uel + league.uecl) {
-            console.log("UECL");
             return (
                 <td className={`${styles.colouredCell} ${styles.colUECL}`}></td>
             )
@@ -80,14 +76,12 @@ function colouredCells(league, index) {
     } else {
         // up
         if (index < league.up) {
-            console.log("UP");
             return (
                 <td className={`${styles.colouredCell} ${styles.colUP}`}></td>
             )
         }
         // relup
         else if (index >= league.up && index < league.up + league.relup) {
-            console.log("RELUP");
             return (
                 <td className={`${styles.colouredCell} ${styles.colRELUP}`}></td>
             )
@@ -96,15 +90,13 @@ function colouredCells(league, index) {
     }
 
     if (index >= topLength) {
-        console.log("yea: ", league.size - (league.reldown + league.down));
         // reldown
         if (index >= league.size - (league.reldown + league.down) && index < league.size - league.down) {
-            console.log("RELDOWN");
             return (
                 <td className={`${styles.colouredCell} ${styles.colRELDOWN}`}></td>
             )
+            // down
         } else if (index >= league.size - league.down) {
-            console.log("DOWN");
             return (
                 <td className={`${styles.colouredCell} ${styles.colDOWN}`}></td>
             )
