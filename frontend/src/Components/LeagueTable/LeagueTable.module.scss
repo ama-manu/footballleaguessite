@@ -113,44 +113,64 @@ $breakpoints: variables.$resolution-breakpoints;
             padding: 0;
         }
 
-        // ucl
-        &:nth-child(1),
-        &:nth-child(2),
-        &:nth-child(3),
-        &:nth-child(4) {
-            .colouredCell {
-                background-color: variables.$ucl-colour;
-            }
+        .colUCL, .colUP {
+            background-color: variables.$ucl-colour;
         }
 
-        // uel
-        &:nth-child(5) {
-            .colouredCell {
-                background-color: variables.$uel-colour;
-            }
+        .colUEL {
+            background-color: variables.$uel-colour;
         }
 
-        // uecl
-        &:nth-child(6) {
-            .colouredCell {
-                background-color: variables.$uecl-colour;
-            }
+        .colUECL {
+            background-color: variables.$uecl-colour;
+        }
+        
+        .colRELUP, .colRELDOWN {
+            background-color: variables.$rel-colour;
         }
 
-        // relpo
-        &:nth-child(16) {
-            .colouredCell {
-                background-color: variables.$relpo-colour;
-            }
+        .colDOWN {
+            background-color: variables.$down-colour;
         }
 
-        // rel
-        &:nth-child(17),
-        &:nth-child(18) {
-            .colouredCell {
-                background-color: variables.$rel-colour;
-            }
-        }
+        // // ucl
+        // &:nth-child(1),
+        // &:nth-child(2),
+        // &:nth-child(3),
+        // &:nth-child(4) {
+        //     .colouredCell {
+        //         background-color: variables.$ucl-colour;
+        //     }
+        // }
+
+        // // uel
+        // &:nth-child(5) {
+        //     .colouredCell {
+        //         background-color: variables.$uel-colour;
+        //     }
+        // }
+
+        // // uecl
+        // &:nth-child(6) {
+        //     .colouredCell {
+        //         background-color: variables.$uecl-colour;
+        //     }
+        // }
+
+        // // relpo
+        // &:nth-child(16) {
+        //     .colouredCell {
+        //         background-color: variables.$relpo-colour;
+        //     }
+        // }
+
+        // // rel
+        // &:nth-child(17),
+        // &:nth-child(18) {
+        //     .colouredCell {
+        //         background-color: variables.$rel-colour;
+        //     }
+        // }
 
 
         // arrow colours

@@ -12,13 +12,6 @@ function FillCells({ p }) {
     var cname = '';
     var content = flexRender(p.column.columnDef.cell, p.getContext());
 
-    // goal diff colours
-    if (p.getContext().getValue() > 0 && p.getContext().column.id === "D") {
-        cname = styles.colourPos;
-    } else if (p.getContext().getValue() < 0 && p.getContext().column.id === "D") {
-        cname = styles.colourNeg;
-    }
-
     // position change arrows
     if (p.getContext().getValue() === "up") {
         cname = styles.colourPos;
@@ -30,6 +23,15 @@ function FillCells({ p }) {
         // applies to all cells, must be overwritten if needed
         cname = styles.noArrow;
     }
+
+
+    // goal diff colours
+    if (p.getContext().getValue() > 0 && p.getContext().column.id === "D") {
+        cname = styles.colourPos;
+    } else if (p.getContext().getValue() < 0 && p.getContext().column.id === "D") {
+        cname = styles.colourNeg;
+    }
+
 
     // add icons
     if (typeof p.getContext().getValue() === "string" && p.getContext().getValue().slice(0, 4) === "http") {
@@ -47,6 +49,72 @@ function FillCells({ p }) {
             {content}
         </td>
     )
+}
+
+function colouredCells(league, index) {
+    console.log(index);
+    var topLength = 0;
+    if (league.topLeague == true) {
+        // ucl
+        if (index < league.ucl) {
+            console.log("UCL");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colUCL}`}></td>
+            )
+        }
+        // uel
+        else if (index >= league.ucl && index < league.ucl + league.uel) {
+            console.log("UEL");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colUEL}`}></td>
+            )
+        }
+        // uecl
+        else if (index >= league.ucl + league.uel && index < league.ucl + league.uel + league.uecl) {
+            console.log("UECL");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colUECL}`}></td>
+            )
+        }
+        topLength = league.ucl + league.uel + league.uecl;
+    } else {
+        // up
+        if (index < league.up) {
+            console.log("UP");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colUP}`}></td>
+            )
+        }
+        // relup
+        else if (index >= league.up && index < league.up + league.relup) {
+            console.log("RELUP");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colRELUP}`}></td>
+            )
+        }
+        topLength = league.up + league.relup;
+    }
+
+    if (index >= topLength) {
+        console.log("yea: ", league.size - (league.reldown + league.down));
+        // reldown
+        if (index >= league.size - (league.reldown + league.down) && index < league.size - league.down) {
+            console.log("RELDOWN");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colRELDOWN}`}></td>
+            )
+        } else if (index >= league.size - league.down) {
+            console.log("DOWN");
+            return (
+                <td className={`${styles.colouredCell} ${styles.colDOWN}`}></td>
+            )
+        }
+    }
+
+    return (
+        <td className={styles.colouredCell}></td>
+    )
+
 }
 
 
@@ -155,7 +223,7 @@ function LeagueTable({ data, setMatchday, league/*dropdownMenu, defaultOption*/ 
             {/* <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" /> */}
             {/* <div>{league.name}</div> */}
             <table className={styles.table}>
-                
+
                 <thead>
                     {table?.getHeaderGroups().map(headerGroup => (
                         <tr key={headerGroup.id}>
@@ -174,7 +242,8 @@ function LeagueTable({ data, setMatchday, league/*dropdownMenu, defaultOption*/ 
                 <tbody>
                     {table?.getRowModel().rows.map((row, rindex) => (
                         <tr key={row.id}>
-                            <td className={styles.colouredCell}></td>
+                            {/* <td className={styles.colouredCell}></td> */}
+                            {colouredCells(league, rindex)}
                             <td>{rindex + 1}</td>
                             {row.getVisibleCells().map(cell => (
                                 <FillCells
