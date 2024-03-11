@@ -73,6 +73,17 @@ function fillNotYetPlayedMatches(tables) {
     }
 }
 
+// fill missing short team names
+function fillMissingTeamNames(tables) {
+    tables.forEach(table => {
+        table.forEach(team => {
+            if (team.shortName === "") {
+                team.shortName = team.teamName;
+            }
+        });
+    });
+}
+
 function addMissingMatchdays(tables) {
     for (var i = 0; i < tables.length - 1; i++) {
         tables[i].forEach(team => {
@@ -198,18 +209,20 @@ async function calcLeague(matches) {
         sortLeagueTable(table);
     });
 
-    // replace union logo
-    tables.forEach(table => {
-        table.forEach(team => {
-            if (team.shortName === "Union Berlin") {
-                team.teamIconUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg';
-            }
-        });
-    });
+    // // replace union logo
+    // tables.forEach(table => {
+    //     table.forEach(team => {
+    //         if (team.shortName === "Union Berlin") {
+    //             team.teamIconUrl = 'https://upload.wikimedia.org/wikipedia/commons/4/44/1._FC_Union_Berlin_Logo.svg';
+    //         }
+    //     });
+    // });
+
+    fillMissingTeamNames(tables);
 
     // tables.map((table) => {
     //     table.map((tream) => {
-    //         if (tream.teamName == "Hertha BSC") {
+    //         if (tream.teamName == "SC Freiburg II") {
     //             console.log(tream);
     //         }
     //     })
