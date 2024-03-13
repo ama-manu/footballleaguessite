@@ -32,7 +32,7 @@ function App() {
     <BrowserRouter>
       <Navbar />
       <Routes>
-        <Route exact path='/' element={<Base> </Base>}>
+        <Route exact path='/' element={<Base><Landing leagues={Leagues}></Landing> </Base>}>
         </Route>
 
         <Route exact path='/de/bl1' element={<Base> <League league={Leagues[0].submenu[0]}></League> </Base>} />

@@ -25,6 +25,12 @@ function buliTeam(teamName, shortName, teamIconUrl, points, position, posChange,
     this.goalDiff = goalDiff;
 }
 
+function httpToHttps(link) {
+    const regex = /http:\/\/([\w.]+\/?)\S*/gi;
+    var httpsLink = link.replace(regex, 'https://$1');
+    return httpsLink;
+}
+
 // sort league table by points and goalDiff and goals
 function sortLeagueTable(table) {
     var sortedTable = table.sort((a, b) => {
@@ -144,8 +150,8 @@ async function calcLeague(matches) {
         // construct teams
         // var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, match.group.groupOrderID, 0, 0, 0, 0);
         // var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, match.group.groupOrderID, 0, 0, 0, 0);
-        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, match.team1.teamIconUrl, 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, 1, 0, 0, 0, 0);
-        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, match.team2.teamIconUrl, 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, 1, 0, 0, 0, 0);
+        var newTeam1 = new buliTeam(match.team1.teamName, match.team1.shortName, httpToHttps(match.team1.teamIconUrl), 0, 0, "", goals.scoreTeam2, goals.scoreTeam1, 1, 0, 0, 0, 0);
+        var newTeam2 = new buliTeam(match.team2.teamName, match.team2.shortName, httpToHttps(match.team2.teamIconUrl), 0, 0, "", goals.scoreTeam1, goals.scoreTeam2, 1, 0, 0, 0, 0);
 
         // calculate points
         if (pointsTeam1 > pointsTeam2) {
