@@ -26,8 +26,8 @@ function buliTeam(teamName, shortName, teamIconUrl, points, position, posChange,
 }
 
 function httpToHttps(link) {
-    const regex = /http:\/\/([\w.]+\/?)\S*/gi;
-    var httpsLink = link.replace(regex, 'https://$1');
+    const regex = /^.*http:/gi;
+    const httpsLink = link.replace(regex, 'https:');
     return httpsLink;
 }
 
