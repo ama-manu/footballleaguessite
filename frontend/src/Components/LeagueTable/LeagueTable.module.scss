@@ -43,6 +43,12 @@ $breakpoints: variables.$resolution-breakpoints;
             @include media(">phone") {
                 padding: 0.75rem 1rem;
 
+                // max&min width for arrows
+                &:nth-child(3) {
+                    min-width: 0.95rem;
+                    max-width: 0.95rem;
+                }
+
                 // max&min width for Spiele S U N D Punkte
                 &:nth-child(6),
                 &:nth-child(7),
@@ -86,6 +92,11 @@ $breakpoints: variables.$resolution-breakpoints;
                 font-size: 85%;
                 // font-size: 0.8rem;
 
+                // max&min width for arrows
+                &:nth-child(3) {
+                    min-width: 0.95rem;
+                    max-width: 0.95rem;
+                }
 
                 // max&min width for Sp S U N D
                 &:nth-child(6),
