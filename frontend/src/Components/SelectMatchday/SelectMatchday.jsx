@@ -6,6 +6,7 @@ function SelectMatchday({ data, league }) {
     const [matchday, setMatchday] = useState(undefined);
     const [sentData, setSentData] = useState(null);
     var dropdownMenu = [];
+    const [dropdownMenuT, setDropdownMenu] = useState({});
     var defaultOption = undefined;
     var dataLength = 0;
 
@@ -32,41 +33,29 @@ function SelectMatchday({ data, league }) {
 
         selectMatchdayFromData();
 
-        // (async () => {
-        //     // dropdown menu
-        //     // console.log(await data.length);
-        //     // dataLength = await data.length;
-        //     // for (var i = 1; i <= await dataLength; i++) {
-        //     //     await dropdownMenu.push({
-        //     //         value: i,
-        //     //         label: `${i}`
-        //     //     });
-        //     // };
-        //     // defaultOption = await dropdownMenu.at(-1);
-        //     var i = 0;
-        //     for (let elem of data) {
-        //         try {
-        //             i++;
-        //             dropdownMenu.push({
-        //                 value: i,
-        //                 label: `${i}`
-        //             });
-        //         } catch (error) {
-        //             console.log("Error calculating dropdown menu: ", error);
-        //         }
-        //     }
-        // })()
-
     }, [data, matchday]);
 
+    useEffect(() => {
+        
+        const dropdownContent = async () => {
+            const nOMatches = await data[data.length - 1][0].matches;            
+            const newDropdownMenu = {};
+            for (let i = 1; i <= nOMatches; i++) {
+                newDropdownMenu[i] = i.toString();
+            }        
+            setDropdownMenu(newDropdownMenu);
+        }
 
+        dropdownContent();
 
+    }, [data])
 
+    dropdownMenu = Object.values(dropdownMenuT);
 
     return (
         <>
             {/* <button onClick={() => setMatchday(5)}>HALLLOOO</button> */}
-            <LeagueTable data={sentData} setMatchday={updateMatchday} league={league}/*dropdownMenu={dropdownMenu} defaultOption={defaultOption}*/ />
+            <LeagueTable data={sentData} setMatchday={updateMatchday} league={league} dropdownMenu={dropdownMenu} defaultOption={defaultOption} />
         </>
     )
 
