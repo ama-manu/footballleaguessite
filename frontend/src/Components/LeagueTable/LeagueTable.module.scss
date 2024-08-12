@@ -3,7 +3,40 @@
 
 $breakpoints: variables.$resolution-breakpoints;
 
+.dataSelectors {
+    // background-color: red;
+    // padding: 1rem;
 
+    @include variables.Nanum-Gothic;
+
+    text-align: right;
+    width: 9rem;
+    margin-left: auto;
+
+    padding-bottom: calc(1rem + 2px);
+
+    .Matchdays {
+        text-align: left;
+        display: inline-flex;
+        align-items: center;
+
+        .dropdownTitle {
+            text-align: left;
+            padding-right: 0.5rem;
+        }
+
+        :global .Dropdown-root {
+            text-align: center;
+            width: 64px;
+
+            .Dropdown-menu {
+                scrollbar-width: thin;
+            }
+
+        }
+    }
+
+}
 
 .table {
     border-collapse: collapse;

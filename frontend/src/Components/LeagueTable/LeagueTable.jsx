@@ -5,7 +5,7 @@ import { useMediaQuery } from 'react-responsive';
 
 import Dropdown from 'react-dropdown';
 import Option from 'react-dropdown';
-import 'react-dropdown/style.css';
+import './local-style.css';
 
 import styles from './LeagueTable.module.scss'
 
@@ -217,11 +217,18 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
         console.log(option);
         setMatchday(Number(option.value) - 1);
     }
+
+
+
     return (
         <>
             {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
             <div className={styles.dataSelectors}>
-                <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" onChange={handleSelect} />
+                <div className={styles.Matchdays}>
+                    <div className={styles.dropdownTitle}>Spieltag</div>
+                    <Dropdown options={dropdownMenu} value={defaultOption} placeholder={"..."} onChange={handleSelect} />
+                </div>
+
             </div>
 
             {/* <div>{league.name}</div> */}
