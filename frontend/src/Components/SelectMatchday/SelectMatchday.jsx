@@ -7,7 +7,8 @@ function SelectMatchday({ data, league }) {
     const [sentData, setSentData] = useState(null);
     var dropdownMenu = [];
     const [dropdownMenuT, setDropdownMenu] = useState({});
-    var defaultOption = undefined;
+    // var defaultOption = undefined;
+    const [defaultOption, setDefaultOption] = useState({ undefined });
     var dataLength = 0;
 
     const updateMatchday = (md) => {
@@ -36,19 +37,24 @@ function SelectMatchday({ data, league }) {
     }, [data, matchday]);
 
     useEffect(() => {
-        
+
         const dropdownContent = async () => {
-            const nOMatches = await data[data.length - 1][0].matches;            
+            const nOMatches = await data[data.length - 1][0].matches;
             const newDropdownMenu = {};
             for (let i = 1; i <= nOMatches; i++) {
                 newDropdownMenu[i] = i.toString();
-            }        
+            }
+
             setDropdownMenu(newDropdownMenu);
         }
 
         dropdownContent();
 
-    }, [data])
+    }, [data]);
+
+    useEffect(() => {
+        setDefaultOption(dropdownMenu.at(-1));
+    }, [dropdownMenu]);
 
     dropdownMenu = Object.values(dropdownMenuT);
 

@@ -219,14 +219,13 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
     }
 
 
-
     return (
         <>
             {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
             <div className={styles.dataSelectors}>
                 <div className={styles.Matchdays}>
                     <div className={styles.dropdownTitle}>Spieltag</div>
-                    <Dropdown options={dropdownMenu} value={defaultOption} placeholder={"..."} onChange={handleSelect} />
+                    <Dropdown options={dropdownMenu} value={defaultOption} placeholder={defaultOption} onChange={handleSelect} />
                 </div>
 
             </div>
