@@ -213,7 +213,8 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
 
     // const [selectedOption, setSelectedOption] = useState<Option | null>(null);
     // dropdown handle selected option
-    const handleSelect = (option: Option) => {
+    const handleSelect = (option) => {
+//  const handleSelect = (option: Option) => {
         console.log(option);
         setMatchday(Number(option.value) - 1);
     }
