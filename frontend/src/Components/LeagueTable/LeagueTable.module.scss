@@ -3,6 +3,41 @@
 
 $breakpoints: variables.$resolution-breakpoints;
 
+.dataSelectors {
+    // background-color: red;
+    // padding: 1rem;
+
+    @include variables.Nanum-Gothic;
+
+    text-align: right;
+    width: 9rem;
+    margin-left: auto;
+
+    padding-bottom: calc(1rem + 2px);
+
+    .Matchdays {
+        text-align: left;
+        display: inline-flex;
+        align-items: center;
+
+        .dropdownTitle {
+            text-align: left;
+            padding-right: 0.5rem;
+        }
+
+        :global .Dropdown-root {
+            text-align: center;
+            width: 64px;
+
+            .Dropdown-menu {
+                scrollbar-width: thin;
+            }
+
+        }
+    }
+
+}
+
 .table {
     border-collapse: collapse;
     margin: 0;
@@ -41,12 +76,26 @@ $breakpoints: variables.$resolution-breakpoints;
             @include media(">phone") {
                 padding: 0.75rem 1rem;
 
-                // max&min width for S U N D
+                // max&min width for arrows
+                &:nth-child(3) {
+                    min-width: 0.95rem;
+                    max-width: 0.95rem;
+                }
+
+                // max&min width for Spiele S U N D Punkte
+                &:nth-child(6),
                 &:nth-child(7),
                 &:nth-child(8),
-                &:nth-child(9) {
+                &:nth-child(9),
+                &:nth-child(12) {
                     min-width: 1rem;
                     max-width: 1rem;
+                }
+
+                // max&min width for Tore
+                &:nth-child(10) {
+                    min-width: 2rem;
+                    max-width: 2rem;
                 }
 
                 // highlighted columns
@@ -57,7 +106,7 @@ $breakpoints: variables.$resolution-breakpoints;
                 }
 
 
-                &:nth-child(6),
+                // &:nth-child(6),
                 &:nth-child(11),
                 &:nth-child(12) {
                     text-align: right;
@@ -76,13 +125,31 @@ $breakpoints: variables.$resolution-breakpoints;
                 font-size: 85%;
                 // font-size: 0.8rem;
 
+                // max&min width for arrows
+                &:nth-child(3) {
+                    min-width: 0.95rem;
+                    max-width: 0.95rem;
+                }
 
-                // max&min width for S U N D
+                // max&min width for Sp S U N D
+                &:nth-child(6),
                 &:nth-child(7),
                 &:nth-child(8),
                 &:nth-child(9) {
                     min-width: 1rem;
                     max-width: 1rem;
+                }
+
+                // max&min width for Pkt
+                &:nth-child(11) {
+                    min-width: 1.2rem;
+                    max-width: 1.2rem;
+                }
+
+                // max&min width for Tore
+                &:nth-child(10) {
+                    min-width: 2rem;
+                    max-width: 2rem;
                 }
 
                 // highlighted columns
@@ -92,7 +159,7 @@ $breakpoints: variables.$resolution-breakpoints;
                     color: black;
                 }
 
-                &:nth-child(6),
+                // &:nth-child(6),
                 &:nth-child(11) {
                     text-align: right;
                 }
@@ -158,6 +225,7 @@ $breakpoints: variables.$resolution-breakpoints;
         .colDOWN {
             background-color: variables.$down-colour;
         }
+
         // arrow colours
         .colourPos svg {
             color: variables.$positive-colour;

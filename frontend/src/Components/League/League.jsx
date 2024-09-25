@@ -271,7 +271,8 @@ function League({ league }) {
     return (
         < div className={styles.league} >
             <img className={styles.leagueImg} src={league.logoURL}></img>
-            <SelectMatchday data={data} league={league} />
+            {data && <SelectMatchday data={data} league={league} /> }
+            
             <Key league={league}></Key>
         </div >
 

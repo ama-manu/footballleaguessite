@@ -4,7 +4,8 @@ import { RiArrowUpSLine, RiArrowDownSLine } from 'react-icons/ri';
 import { useMediaQuery } from 'react-responsive';
 
 import Dropdown from 'react-dropdown';
-import 'react-dropdown/style.css';
+import Option from 'react-dropdown';
+import './local-style.css';
 
 import styles from './LeagueTable.module.scss'
 
@@ -110,7 +111,7 @@ function colouredCells(league, index) {
 }
 
 
-function LeagueTable({ data, setMatchday, league/*dropdownMenu, defaultOption*/ }) {
+function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption }) {
     //invalid data in case no data is sent
     if (!data) {
         // retVal = <div>Loading ...</div>
@@ -209,10 +210,27 @@ function LeagueTable({ data, setMatchday, league/*dropdownMenu, defaultOption*/ 
     // table data
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
+
+    // const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+    // dropdown handle selected option
+    const handleSelect = (option) => {
+//  const handleSelect = (option: Option) => {
+        console.log(option);
+        setMatchday(Number(option.value) - 1);
+    }
+
+
     return (
         <>
             {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
-            {/* <Dropdown options={dropdownMenu} value={defaultOption} placeholder="Spieltag" /> */}
+            <div className={styles.dataSelectors}>
+                <div className={styles.Matchdays}>
+                    <div className={styles.dropdownTitle}>Spieltag</div>
+                    <Dropdown options={dropdownMenu} value={defaultOption} placeholder={defaultOption} onChange={handleSelect} />
+                </div>
+
+            </div>
+
             {/* <div>{league.name}</div> */}
             <table className={styles.table}>
 
