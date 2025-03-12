@@ -122,4 +122,19 @@
             display: block;
         }
     }
+
+    .leaguelist {
+        position: sticky;
+        display: flex;
+        align-items: center;
+        // flex-wrap: wrap;
+        list-style: none;
+
+        // background-color: red;
+
+        .image {
+            height: 1.2rem;
+            margin: 0 1rem;
+        }
+    }
 }
