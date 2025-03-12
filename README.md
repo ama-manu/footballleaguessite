@@ -1,5 +1,6 @@
 Website to display football(soccer) leagues.  
-Currently only showing latest matchday of the 1. Bundesliga (german).  
+Currently only showing latest season of top 3 german leagues.
+Can select matchday.
 
 To run execute "npm start" from "/frontend".
 
