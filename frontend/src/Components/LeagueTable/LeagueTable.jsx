@@ -211,10 +211,9 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
     const table = useReactTable({ data, columns, getCoreRowModel: getCoreRowModel() });
 
 
-    // const [selectedOption, setSelectedOption] = useState<Option | null>(null);
+
     // dropdown handle selected option
     const handleSelect = (option) => {
-//  const handleSelect = (option: Option) => {
         console.log(option);
         setMatchday(Number(option.value) - 1);
     }
@@ -222,7 +221,6 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
 
     return (
         <>
-            {/* <button onClick={() => setMatchday(8)}>HALLLOOO</button> */}
             <div className={styles.dataSelectors}>
                 <div className={styles.Matchdays}>
                     <div className={styles.dropdownTitle}>Spieltag</div>
@@ -231,7 +229,6 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
 
             </div>
 
-            {/* <div>{league.name}</div> */}
             <table className={styles.table}>
 
                 <thead>
@@ -252,7 +249,6 @@ function LeagueTable({ data, setMatchday, league, dropdownMenu, defaultOption })
                 <tbody>
                     {table?.getRowModel().rows.map((row, rindex) => (
                         <tr key={row.id}>
-                            {/* <td className={styles.colouredCell}></td> */}
                             {colouredCells(league, rindex)}
                             <td>{rindex + 1}</td>
                             {row.getVisibleCells().map(cell => (
