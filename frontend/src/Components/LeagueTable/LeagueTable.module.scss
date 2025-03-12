@@ -23,14 +23,27 @@ $breakpoints: variables.$resolution-breakpoints;
         .dropdownTitle {
             text-align: left;
             padding-right: 0.5rem;
+
+            color: variables.$text-colour;
         }
 
         :global .Dropdown-root {
             text-align: center;
             width: 64px;
 
+            color: variables.$text-colour;
+
             .Dropdown-menu {
                 scrollbar-width: thin;
+
+                background-color: variables.$main-colour;
+
+                .Dropdown-option {
+                    color: variables.$text-colour;
+                    &.is-selected {
+                        color: variables.$text-colour-contrast;
+                    }
+                }
             }
 
         }
@@ -43,8 +56,8 @@ $breakpoints: variables.$resolution-breakpoints;
     margin: 0;
     padding: 0;
 
-    color: variables.$text-colour;
-    background-color: white;
+    color: variables.$text-colour-grey;
+    background-color: variables.$main-colour;
 
     // font (inmporting mixin from variables)
     @include variables.Nanum-Gothic;
@@ -102,7 +115,7 @@ $breakpoints: variables.$resolution-breakpoints;
                 &:nth-child(2),
                 &:nth-child(6),
                 &:nth-child(12) {
-                    color: black;
+                    color: variables.$text-colour;
                 }
 
 
@@ -156,7 +169,7 @@ $breakpoints: variables.$resolution-breakpoints;
                 &:nth-child(2),
                 &:nth-child(6),
                 &:nth-child(11) {
-                    color: black;
+                    color: variables.$text-colour;
                 }
 
                 // &:nth-child(6),

@@ -3,7 +3,7 @@
 .navbar {
     height: variables.$headerbar;
 
-    background-color: white;
+    background-color: variables.$main-colour;
 
     position: sticky;
     top: 0;
@@ -101,7 +101,7 @@
             box-shadow: variables.$shadow-colour;
             
             a {
-                color: black;
+                color: variables.$text-colour;
             }
 
             .smallLine {

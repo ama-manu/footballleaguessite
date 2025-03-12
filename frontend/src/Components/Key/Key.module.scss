@@ -17,11 +17,12 @@
         width: 40%;
 
         h1 {
+            color: variables.$text-colour;
             font-size: 80%;
         }
 
         ul {
-            color: variables.$text-colour;
+            color: variables.$text-colour-grey;
             list-style: none;
             padding: 0;
             li {
