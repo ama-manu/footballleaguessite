@@ -13,7 +13,10 @@ const Dropdown = ({ items, dropdown, setDropdown }) => {
       <ul>
         {items.submenu.map((submenu, index) => (
           <li key={index} className={styles.menuitems} tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
-            <Link onClick={() => dropdown && setDropdown(false)} to={`/${items.internalURL}/${submenu.internalURL}`}>{submenu.league}</Link>
+            {/* <Link onClick={() => dropdown && setDropdown(false)} to={`/${items.internalURL}/${submenu.internalURL}`}>{submenu.league}</Link> */}
+            <Link onClick={() => dropdown && setDropdown(false)} to={`/${items.internalURL}/${submenu.internalURL}`}>
+              <img className={styles.imageDropdown} src={submenu.wordmarkURL}></img>
+            </Link>
           </li>
         ))}
       </ul>
