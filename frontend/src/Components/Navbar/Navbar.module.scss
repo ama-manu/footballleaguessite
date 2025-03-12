@@ -3,7 +3,7 @@
 .navbar {
     height: variables.$headerbar;
 
-    background-color: white;
+    background-color: variables.$main-colour;
 
     position: sticky;
     top: 0;
@@ -71,6 +71,10 @@
                     }
                 }
             }
+
+            .imageDropdown {
+                height: 1.2rem;
+            }
         }
 
 
@@ -97,7 +101,7 @@
             box-shadow: variables.$shadow-colour;
             
             a {
-                color: black;
+                color: variables.$text-colour;
             }
 
             .smallLine {
@@ -108,7 +112,7 @@
 
             ul {
                 list-style: none;
-                padding-left: 1rem;
+                padding-left: 0.5rem;
                 li {
                     padding: 1rem;
                 }
@@ -120,6 +124,21 @@
         .dropdownshow {
             @extend .dropdown;
             display: block;
+        }
+    }
+
+    .leaguelist {
+        position: sticky;
+        display: flex;
+        align-items: center;
+        // flex-wrap: wrap;
+        list-style: none;
+
+        // background-color: red;
+
+        .image {
+            height: 1.2rem;
+            margin: 0 1rem;
         }
     }
 }

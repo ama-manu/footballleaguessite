@@ -4,6 +4,8 @@ import { Link, NavLink } from "react-router-dom"
 import menuData from '../../Data/Leagues.jsx'
 import styles from './Navbar.module.scss'
 
+import { useMediaQuery } from 'react-responsive';
+
 const Dropdown = ({ items, dropdown, setDropdown }) => {
   return (
     <div className={dropdown ? (styles.dropdownshow) : styles.dropdown}>
@@ -11,7 +13,10 @@ const Dropdown = ({ items, dropdown, setDropdown }) => {
       <ul>
         {items.submenu.map((submenu, index) => (
           <li key={index} className={styles.menuitems} tabIndex={-1} onMouseDown={(e) => e.preventDefault()}>
-            <Link onClick={() => dropdown && setDropdown(false)} to={`/${items.internalURL}/${submenu.internalURL}`}>{submenu.league}</Link>
+            {/* <Link onClick={() => dropdown && setDropdown(false)} to={`/${items.internalURL}/${submenu.internalURL}`}>{submenu.league}</Link> */}
+            <Link onClick={() => dropdown && setDropdown(false)} to={`/${items.internalURL}/${submenu.internalURL}`}>
+              <img className={styles.imageDropdown} src={submenu.wordmarkURL}></img>
+            </Link>
           </li>
         ))}
       </ul>
@@ -108,15 +113,38 @@ const MenuItems = ({ items }) => {
 };
 
 
+function LeagueList({ items }) {
+  items.forEach((country) => country.submenu.forEach((league) => console.log(league.league)));
+  return (
+    <ul className={styles.leaguelist}>
+      {items.map(country =>
+        country.submenu.map((league, index) => (
+          <Link to={`/${country.internalURL}/${league.internalURL}`}>
+            <img className={styles.image} src={league.wordmarkURL}></img>
+          </Link>
+        ))
+      )}
+    </ul>
+  );
+}
+
+
 function Navbar() {
+  var isMobile = useMediaQuery({ query: `(max-width: 630px)` });
+
   return (
     <nav className={styles.navbar}>
       <Link to='/' className={styles.logo}>FLS</Link>
-      <ul className={styles.menu}>
-        {menuData.map((menuD) => {
-          return <MenuItems items={menuD} />;
-        })}
-      </ul>
+      {isMobile ? (
+        <ul className={styles.menu}>
+          {menuData.map((menuD) => {
+            return <MenuItems items={menuD} />;
+          })}
+        </ul>
+      ) : (
+        <LeagueList items={menuData} />
+      )}
+
     </nav>
   )
 }

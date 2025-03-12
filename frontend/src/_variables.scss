@@ -10,22 +10,40 @@
 }
 
 
-
-// $main-colour: #eeeeee;
 $main-colour: white;
-$text-colour: #7a7a7a;
+$text-colour: black;
+$text-colour-contrast: black;
+$text-colour-grey: #7a7a7a;
 
-// $background-colour: #f1f1f1;
 $primary-colour: #b80000;
-// $background-colour: #242424;
 $background-colour: rgb(240, 240, 240);
 
 $shadow-colour: #d3d3d3;
 
+
+// POSSIBLE DARK MODE COLOURS
+// @media (prefers-color-scheme: dark) {
+//   // $main-colour: #eeeeee;
+//   $main-colour: black;
+//   $text-colour: white;
+//   $text-colour-contrast: black;
+//   $text-colour-grey: #858585;
+
+//   // $background-colour: #f1f1f1;
+//   $primary-colour: #b80000;
+//   // $background-colour: #242424;
+//   $background-colour: #0f0f0f;
+
+//   $shadow-colour: #2c2c2c;
+// }
+
+
 $positive-colour: rgb(0, 185, 0);
 $negative-colour: red;
 
-$resolution-breakpoints: (phone: 810px);
+$resolution-breakpoints: (
+  phone: 810px
+);
 
 $headerbar: 3.5rem;
 $footer: 5rem;

@@ -9,7 +9,7 @@
     border-bottom: 1px solid #ccc;
     /* border-radius: 2px; */
     box-sizing: border-box;
-    color: black;
+    color: variables.$text-colour;
     cursor: default;
     outline: none;
     padding: 8px 52px 8px 10px;
@@ -77,12 +77,12 @@
   
   .Dropdown-option:hover {
     background-color: #f2f9fc;
-    color: black;
+    color: variables.$text-colour;
   }
   
   .Dropdown-option.is-selected {
     background-color: #f2f9fc;
-    color: black;
+    color: bvariables.$text-colourlack;
   }
   
   .Dropdown-noresults {
