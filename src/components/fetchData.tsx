@@ -1,5 +1,5 @@
 "use client";
-import leagues from "../Data/leagues";
+import leagues from "../lib/leagues";
 import useSWR from "swr";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());

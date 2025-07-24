@@ -1,7 +1,7 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { fetchData, FetchDataComponent } from "./Components/fetchData";
-import leagues from "./Data/leagues";
+import { fetchData, FetchDataComponent } from "../components/fetchData";
+import leagues from "../lib/leagues";
 
 export default function Home() {
   return (
