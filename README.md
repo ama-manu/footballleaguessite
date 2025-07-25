@@ -1,7 +1,6 @@
-Website to display football(soccer) leagues.  
-Currently only showing latest season of top 3 german leagues.
-Can select matchday.
+Website to display football(soccer) leagues.
 
-To run execute "npm start" from "/frontend".
+This is the remade version in Next.js.
 
-A working version is hosted here: https://football-leagues-site.netlify.app/
+Build with "npx next build".
+Then run with "npm start".
