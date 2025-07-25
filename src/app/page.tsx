@@ -1,12 +1,17 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { fetchData, FetchDataComponent } from "../lib/fetchData";
-import leagues from "../lib/leagues";
+import { processData } from "../lib/processData";
+import countries from "../lib/leagues";
 
-export default function Home() {
+export default async function Home() {
+  const data = await processData(countries[0].leagues[0]);
+
+  // console.log(await data.matchdays[0].matches);
+
   return (
     <div>
-      {/* <div className={styles.page}>
+      {
+        /* <div className={styles.page}>
         <main className={styles.main}>
           <Image
             className={styles.logo}
@@ -93,7 +98,8 @@ export default function Home() {
             Go to nextjs.org →
           </a>
         </footer>
-      </div> */}
+      </div> */
+      }
       {/* <FetchDataComponent url={leagues[0].submenu[0].externalURL} /> */}
     </div>
   );
