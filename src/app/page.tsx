@@ -6,7 +6,7 @@ import countries from "../lib/leagues";
 export default async function Home() {
   const data = await processData(countries[0].leagues[0]);
 
-  // console.log(await data.matchdays[0].matches);
+  console.log(data.matchdays[0].table);
 
   return (
     <div>
