@@ -1,6 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
-import { fetchData, FetchDataComponent } from "../components/fetchData";
+import { fetchData, FetchDataComponent } from "../lib/fetchData";
 import leagues from "../lib/leagues";
 
 export default function Home() {
@@ -94,7 +94,7 @@ export default function Home() {
           </a>
         </footer>
       </div> */}
-      <FetchDataComponent url={leagues[0].submenu[0].externalURL} />
+      {/* <FetchDataComponent url={leagues[0].submenu[0].externalURL} /> */}
     </div>
   );
 }
