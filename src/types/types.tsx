@@ -27,13 +27,9 @@ export interface Match {
   matchId: number;
   matchDateTime: string;
   timeZoneId: string;
-  leagueId: number;
-  leagueName: string;
-  matchDateTimeUTC: string;
-  group: {
-    groupName: string;
-    groupOrderId: number;
-    groupId: number;
+  matchday: {
+    number: number;
+    matchdayId: number;
   };
   team1: Team;
   team2: Team;
@@ -60,8 +56,6 @@ export interface Match {
 // Matchday structure - groups matches by matchday/round
 export interface Matchday {
   matchdayNumber: number;
-  groupName: string;
-  groupId: number;
   matches: Match[];
   isFinished: boolean;
 //   startDate?: string;
