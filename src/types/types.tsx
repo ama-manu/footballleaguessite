@@ -44,6 +44,7 @@ export interface Match {
     resultTypeId: number;
     resultDescription: string;
   }>;
+  winner: "team1" | "team2" | "draw" | null; // Added winner field
   goals: Goal[];
   location?: {
     locationId: number;
@@ -58,8 +59,9 @@ export interface Matchday {
   matchdayNumber: number;
   matches: Match[];
   isFinished: boolean;
-//   startDate?: string;
-//   endDate?: string;
+  table: Table;
+  //   startDate?: string;
+  //   endDate?: string;
 }
 
 // League configuration and metadata
@@ -73,7 +75,7 @@ export interface LeagueConfig {
   size: number; // number of teams
   // European competition spots
   ucl: number; // Champions League spots
-  uel: number; // Europa League spots  
+  uel: number; // Europa League spots
   uecl: number; // Europa Conference League spots
   // Promotion/Relegation
   up: number; // direct promotion spots
@@ -95,34 +97,30 @@ export interface LeagueData {
   season: string;
   matchdays: Matchday[];
   allMatches: Match[]; // Flat array of all matches for easy filtering
-// lastUpdated: string;
+  // lastUpdated: string;
   isComplete: boolean;
 }
 
 // Table/standings related types
-export interface TeamStanding {
+export interface TableEntry {
   position: number;
-  teamId: number;
-  teamName: string;
-  teamIconUrl?: string;
-  matchesPlayed: number;
-  wins: number;
-  draws: number;
-  losses: number;
-  goalsFor: number;
-  goalsAgainst: number;
-  goalDifference: number;
-  points: number;
-  form?: string[]; // Last 5 match results ["W", "L", "D", "W", "L"]
+  team: {
+    teamId: number;
+    teamName: string;
+    teamIconUrl?: string;
+    matchesPlayed: number;
+    wins: number;
+    draws: number;
+    losses: number;
+    goalsFor: number;
+    goalsAgainst: number;
+    goalDifference: number;
+    points: number;
+    form: string[]; // match results e.g. ["W", "L", "D", "W", "L"]
+  };
 }
 
-export interface LeagueTable {
-  leagueName: string;
-  season: string;
-  matchday: number;
-  standings: TeamStanding[];
-  lastUpdated: string;
-}
+export type Table = TableEntry[];
 
 // API response types
 export interface ApiResponse<T> {
