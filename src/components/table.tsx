@@ -72,7 +72,7 @@ const columns = [
 		cell: (props: any) => <div>{props.getValue()}</div>,
 	},
 	{
-		accessorKey: "points",
+		accessorKey: "team.points",
 		header: "Points",
 		cell: (props: any) => <div>{props.getValue()}</div>,
 	},
