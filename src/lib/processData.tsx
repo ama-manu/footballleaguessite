@@ -95,20 +95,24 @@ function groupMatchesByMatchday(matches: Match[]): Matchday[] {
 
 	let matchDays: Matchday[] = [];
 	let previousTable: LeagueTable | null = null;
-	for (let index = 0; index < maxMatchdayNumber; index++) {
+
+	for (let index = 1; index <= maxMatchdayNumber; index++) {
+
 		const indexMatches = matches.filter((match) =>
-			match.matchday.number === index + 1
+			match.matchday.number === index
 		);
+		if (previousTable === null) {
+			previousTable = calculateTable(indexMatches, null);
+		} else {
+			previousTable = calculateTable(indexMatches, previousTable);
+		}
+
 		matchDays.push({
-			matchdayNumber: index + 1,
+			matchdayNumber: index,
 			matches: indexMatches,
 			isFinished: checkAllPlayed(indexMatches),
-			table: calculateTable(indexMatches, previousTable),
+			table: previousTable,
 		});
-
-		if (index > 0) {
-			previousTable = matchDays[index - 1].table;
-		}
 	}
 
 	return matchDays;
@@ -132,7 +136,7 @@ function calculateTable(
 				teamId: match.team1.teamId,
 				teamName: match.team1.teamName,
 				teamIconUrl: match.team1.teamIconUrl,
-				matchesPlayed: 1,
+				matchesPlayed: 0,
 				wins: 0,
 				draws: 0,
 				losses: 0,
@@ -150,7 +154,7 @@ function calculateTable(
 				teamId: match.team2.teamId,
 				teamName: match.team2.teamName,
 				teamIconUrl: match.team2.teamIconUrl,
-				matchesPlayed: 1,
+				matchesPlayed: 0,
 				wins: 0,
 				draws: 0,
 				losses: 0,
@@ -172,6 +176,10 @@ function calculateTable(
 			const result: any = match.matchResults.find((r) =>
 				r.resultOrderId === highestOrderId
 			);
+
+			// both teams have played one match
+			tempTeam1Entry.team.matchesPlayed++;
+			tempTeam2Entry.team.matchesPlayed++;
 
 			tempTeam1Entry.team.goalsFor += result.pointsTeam1;
 			tempTeam1Entry.team.goalsAgainst += result.pointsTeam2;
@@ -219,6 +227,8 @@ function calculateTable(
 	let newTable: LeagueTable = [];
 
 	// if there is a previous table, we need to update the new table based on the previous table
+	// if there is no previous table, we just use the tempTable
+	// This is the case for the first matchday of the season
 	if (previousTable !== null) {
 		previousTable.forEach((prevTeam) => {
 			const currentTeam = tempTable.find((t) =>
@@ -241,18 +251,20 @@ function calculateTable(
 				];
 
 				newTable.push(currentTeam);
+			} else {
+				newTable.push(prevTeam);
 			}
+		});
+	} else if (previousTable === null && tempTable.length > 0) {
+		tempTable.forEach((team) => {
+			newTable.push(team);
 		});
 	}
 
-	// If there are teams in tempTable not in newTable, add them
-	// This ensure that every team is in the matchday table, even if they didn't play in this matchday yet
-	if (
-		!tempTable.every((team) =>
-			newTable.some((t) => t.team.teamId === team.team.teamId)
-		)
-	) {
-		tempTable.forEach((team) => {
+	// if there is a previous table, we need to add teams that are not in the new table
+	// This is the case when a team has not played the matchdays match yet
+	if (previousTable !== null && newTable.length < previousTable.length) {
+		previousTable.forEach((team) => {
 			if (!newTable.some((t) => t.team.teamId === team.team.teamId)) {
 				newTable.push(team);
 			}
@@ -266,7 +278,7 @@ function calculateTable(
 }
 
 function sortTable(table: LeagueTable): LeagueTable {
-	return table.sort((a: TableEntry, b: TableEntry) => {
+	const sortedTable = table.sort((a: TableEntry, b: TableEntry) => {
 		// First sort by points (descending)
 		if (b.team.points !== a.team.points) {
 			return b.team.points - a.team.points;
@@ -287,6 +299,12 @@ function sortTable(table: LeagueTable): LeagueTable {
 		const nameB = b.team.teamName.replace(/^\d+\.\s*/, "");
 		return nameA.localeCompare(nameB);
 	});
+
+	// Assign positions after sorting
+	sortedTable.forEach((team, index) => {
+		team.position = index + 1;
+	});
+	return sortedTable;
 }
 
 function calculatePositionChange(
