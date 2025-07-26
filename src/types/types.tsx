@@ -59,7 +59,7 @@ export interface Matchday {
   matchdayNumber: number;
   matches: Match[];
   isFinished: boolean;
-  table: Table;
+  table: LeagueTable;
   //   startDate?: string;
   //   endDate?: string;
 }
@@ -104,6 +104,7 @@ export interface LeagueData {
 // Table/standings related types
 export interface TableEntry {
   position: number;
+  positionChange?: "up" | "down" | null; // Change in position from previous matchday
   team: {
     teamId: number;
     teamName: string;
@@ -120,7 +121,7 @@ export interface TableEntry {
   };
 }
 
-export type Table = TableEntry[];
+export type LeagueTable = TableEntry[];
 
 // API response types
 export interface ApiResponse<T> {
