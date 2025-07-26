@@ -2,9 +2,9 @@ import fetchData from "./fetchData";
 import {
 	LeagueConfig,
 	LeagueData,
+	LeagueTable,
 	Match,
 	Matchday,
-	Table,
 	TableEntry,
 } from "../types/types";
 
@@ -94,7 +94,7 @@ function groupMatchesByMatchday(matches: Match[]): Matchday[] {
 	);
 
 	let matchDays: Matchday[] = [];
-	let previousTable: Table | null = null;
+	let previousTable: LeagueTable | null = null;
 	for (let index = 0; index < maxMatchdayNumber; index++) {
 		const indexMatches = matches.filter((match) =>
 			match.matchday.number === index + 1
@@ -114,8 +114,11 @@ function groupMatchesByMatchday(matches: Match[]): Matchday[] {
 	return matchDays;
 }
 
-function calculateTable(matches: Match[], previousTable: Table | null): Table {
-	let tempTable: Table = [];
+function calculateTable(
+	matches: Match[],
+	previousTable: LeagueTable | null,
+): LeagueTable {
+	let tempTable: LeagueTable = [];
 
 	// Create a temporary table to hold the current matchday's results
 	// This will be used to calculate the new table based on the previous table
@@ -124,6 +127,7 @@ function calculateTable(matches: Match[], previousTable: Table | null): Table {
 		// Initialize with default values
 		let tempTeam1Entry: TableEntry = {
 			position: 0,
+			positionChange: null,
 			team: {
 				teamId: match.team1.teamId,
 				teamName: match.team1.teamName,
@@ -141,6 +145,7 @@ function calculateTable(matches: Match[], previousTable: Table | null): Table {
 		};
 		let tempTeam2Entry: TableEntry = {
 			position: 0,
+			positionChange: null,
 			team: {
 				teamId: match.team2.teamId,
 				teamName: match.team2.teamName,
@@ -211,7 +216,7 @@ function calculateTable(matches: Match[], previousTable: Table | null): Table {
 		tempTable.push(tempTeam2Entry);
 	});
 
-	let newTable: Table = [];
+	let newTable: LeagueTable = [];
 
 	// if there is a previous table, we need to update the new table based on the previous table
 	if (previousTable !== null) {
@@ -255,11 +260,12 @@ function calculateTable(matches: Match[], previousTable: Table | null): Table {
 	}
 
 	sortTable(newTable);
+	calculatePositionChange(newTable, previousTable);
 
 	return newTable;
 }
 
-function sortTable(table: Table): Table {
+function sortTable(table: LeagueTable): LeagueTable {
 	return table.sort((a: TableEntry, b: TableEntry) => {
 		// First sort by points (descending)
 		if (b.team.points !== a.team.points) {
@@ -280,6 +286,25 @@ function sortTable(table: Table): Table {
 		const nameA = a.team.teamName.replace(/^\d+\.\s*/, "");
 		const nameB = b.team.teamName.replace(/^\d+\.\s*/, "");
 		return nameA.localeCompare(nameB);
+	});
+}
+
+function calculatePositionChange(
+	table: LeagueTable,
+	previousTable: LeagueTable | null,
+): void {
+	// assume that all teams are in the table
+	if (!previousTable) return;
+
+	table.forEach((newTeam) => {
+		const previousTeam = previousTable.find((prevTeam) =>
+			prevTeam.team.teamId === newTeam.team.teamId
+		);
+		if (previousTeam && previousTeam.position < newTeam.position) {
+			newTeam.positionChange = "up";
+		} else if (previousTeam && previousTeam.position > newTeam.position) {
+			newTeam.positionChange = "down";
+		}
 	});
 }
 
