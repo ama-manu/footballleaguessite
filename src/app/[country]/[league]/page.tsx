@@ -21,26 +21,23 @@ export async function generateStaticParams() {
   return allParams;
 }
 
-async function League(
-  { params }: { params: { country: string; league: string } },
-) {
+async function League(props: { params: Promise<{ country: string; league: string }> }) {
+  const params = await props.params;
 
-  const country = await params.country;
-  const league = await params.league;
   const countryIndex = countries.findIndex((c) =>
-    c.internalURL === country
+    c.internalURL === params.country
   );
   const leagueIndex = countries[countryIndex]?.leagues.findIndex((l) =>
-    l.internalURL === league
+    l.internalURL === params.league
   );
- 
+
 
   const data = [];
 
   for (const tempCountry of countries) {
-    if (tempCountry.internalURL === country) {
+    if (tempCountry.internalURL === params.country) {
       for (const tempLeague of tempCountry.leagues) {
-        if (tempLeague.internalURL === league) {
+        if (tempLeague.internalURL === params.league) {
           for (
             let season = tempLeague.startYear;
             season < new Date().getFullYear();
@@ -53,9 +50,6 @@ async function League(
       }
     }
   }
-
-  console.log(data.findIndex((s) => s.season ));
-  
 
   // const data = await processData(
   //   countries[countryIndex]?.leagues[leagueIndex],
