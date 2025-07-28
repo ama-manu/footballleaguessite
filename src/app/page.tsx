@@ -1,15 +1,24 @@
-import { processData } from "../lib/processData";
-import countries from "../lib/leagues";
-import LeagueTableComponent from "../components/table";
+import Leagues from "../lib/leagues";
 
-export default async function Home() {
-  const data = await processData(countries[0].leagues[0]);
-
-  // console.log(data.matchdays.length);
-
+export default function Home() {
   return (
-    <div>
-      <LeagueTableComponent processedData={data.matchdays[2].table} />
-    </div>
+    <main>
+      <h1>Welcome to the Football Leagues Site</h1>
+      <p>
+        This is the home page. Navigate to a specific league to see more
+        details.
+      </p>
+      <ul>
+        {Leagues.map((country) => (
+          country.leagues.map((league) => (
+            <li key={`${country.internalURL}-${league.internalURL}`}>
+              <a href={`/${country.internalURL}/${league.internalURL}`}>
+                {country.name} - {league.name}
+              </a>
+            </li>
+          ))
+        ))}
+      </ul>
+    </main>
   );
 }
