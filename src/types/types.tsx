@@ -82,6 +82,7 @@ export interface LeagueConfig {
   relup: number; // relegation playoff promotion spots
   reldown: number; // relegation playoff relegation spots
   down: number; // direct relegation spots
+  startYear: number;
 }
 
 // Country/Federation grouping
