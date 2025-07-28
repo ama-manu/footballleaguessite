@@ -93,9 +93,9 @@ export interface Country {
 }
 
 // Complete league data with matches
-export interface LeagueData {
+export interface SeasonData {
   config: LeagueConfig;
-  season: string;
+  season: number;
   matchdays: Matchday[];
   allMatches: Match[]; // Flat array of all matches for easy filtering
   // lastUpdated: string;
