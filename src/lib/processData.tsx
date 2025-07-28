@@ -1,10 +1,10 @@
 import fetchData from "./fetchData";
 import {
 	LeagueConfig,
-	SeasonData,
 	LeagueTable,
 	Match,
 	Matchday,
+	SeasonData,
 	TableEntry,
 } from "../types/types";
 
@@ -69,9 +69,12 @@ function transformMatches(matches: any[]): Match[] {
 	return newMatches;
 }
 
-function excludeRelegationMatches(matches: Match[], config: LeagueConfig): Match[] {
-	return matches.filter(match => 
-		match.matchday.matchdayId !== ((config.size - 1) * 2)
+function excludeRelegationMatches(
+	matches: any[],
+	config: LeagueConfig,
+): any[] {
+	return matches.filter((match) =>
+		match.group.groupOrderID > ((config.size - 1) * 2)
 	);
 }
 
@@ -103,7 +106,6 @@ function groupMatchesByMatchday(matches: Match[]): Matchday[] {
 	let previousTable: LeagueTable | null = null;
 
 	for (let index = 1; index <= maxMatchdayNumber; index++) {
-
 		const indexMatches = matches.filter((match) =>
 			match.matchday.number === index
 		);
@@ -334,15 +336,11 @@ function calculatePositionChange(
 
 async function processData(config: LeagueConfig, seasonStartYear: number) {
 	// const data = await fetchData(config.externalURL + "2024");
-	const data = await fetchData(config.externalURL + seasonStartYear.toString());
+	const data = await fetchData(
+		config.externalURL + seasonStartYear.toString(),
+	);
 
-	// if (isLoading) return { newData: null, error: true, isLoading: true };
-	// if (error) return { newData: null, error: true, isLoading: false };
-
-	// let newData = data;
-
-	const matches = transformMatches(data);
-	
+	const matches = transformMatches(excludeRelegationMatches(data, config));
 
 	let newData: SeasonData = {
 		config: config,
