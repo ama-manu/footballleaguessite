@@ -1,7 +1,7 @@
 import fetchData from "./fetchData";
 import {
 	LeagueConfig,
-	LeagueData,
+	SeasonData,
 	LeagueTable,
 	Match,
 	Matchday,
@@ -341,12 +341,12 @@ async function processData(config: LeagueConfig, seasonStartYear: number) {
 
 	// let newData = data;
 
-	let matches = transformMatches(data);
-	matches = excludeRelegationMatches(matches, config);
+	const matches = transformMatches(data);
+	
 
-	let newData: LeagueData = {
+	let newData: SeasonData = {
 		config: config,
-		season: data[0].leagueSeason,
+		season: seasonStartYear,
 		matchdays: groupMatchesByMatchday(matches),
 		allMatches: matches,
 		isComplete: checkAllPlayed(matches),
