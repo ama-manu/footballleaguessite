@@ -69,6 +69,12 @@ function transformMatches(matches: any[]): Match[] {
 	return newMatches;
 }
 
+function excludeRelegationMatches(matches: Match[], config: LeagueConfig): Match[] {
+	return matches.filter(match => 
+		match.matchday.matchdayId !== ((config.size - 1) * 2)
+	);
+}
+
 function calculateResult(
 	matchResults: any[],
 ): "team1" | "team2" | "draw" | null {
@@ -326,15 +332,17 @@ function calculatePositionChange(
 	});
 }
 
-async function processData(config: LeagueConfig) {
-	const data = await fetchData(config.externalURL);
+async function processData(config: LeagueConfig, seasonStartYear: number) {
+	// const data = await fetchData(config.externalURL + "2024");
+	const data = await fetchData(config.externalURL + seasonStartYear.toString());
 
 	// if (isLoading) return { newData: null, error: true, isLoading: true };
 	// if (error) return { newData: null, error: true, isLoading: false };
 
 	// let newData = data;
 
-	const matches = transformMatches(data);
+	let matches = transformMatches(data);
+	matches = excludeRelegationMatches(matches, config);
 
 	let newData: LeagueData = {
 		config: config,
