@@ -135,7 +135,7 @@ function groupMatchesByMatchday(
 
 		matchDays.push({
 			matchdayNumber: index,
-			matches: indexMatches,
+			// matches: indexMatches,
 			isFinished: checkAllPlayed(indexMatches, seasonStartYear),
 			table: previousTable,
 		});
@@ -372,7 +372,7 @@ async function processData(config: LeagueConfig, seasonStartYear: number) {
 		config: config,
 		season: seasonStartYear,
 		matchdays: groupMatchesByMatchday(matches, seasonStartYear),
-		allMatches: matches,
+		// allMatches: matches,
 		isComplete: checkAllPlayed(matches, seasonStartYear),
 	};
 
