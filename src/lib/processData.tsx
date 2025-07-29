@@ -141,10 +141,6 @@ function groupMatchesByMatchday(
 		});
 	}
 
-	if (seasonStartYear < 2003) {
-		console.log(matchDays);
-	}
-
 	return matchDays;
 }
 
