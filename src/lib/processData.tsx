@@ -1,14 +1,17 @@
 import fetchData from "./fetchData";
 import {
 	LeagueConfig,
-	LeagueData,
 	LeagueTable,
 	Match,
 	Matchday,
+	SeasonData,
 	TableEntry,
 } from "../types/types";
 
-function checkAllPlayed(matches: Match[]): boolean {
+function checkAllPlayed(matches: Match[], seasonStartYear: number): boolean {
+	if (seasonStartYear < new Date().getFullYear()) {
+		return true; // If the season is in the past, we assume all matches are played
+	}
 	return matches.every((match) => match.matchIsFinished);
 }
 
@@ -38,7 +41,7 @@ function transformMatches(matches: any[]): Match[] {
 			},
 			lastUpdateDateTime: match.lastUpdateDateTime,
 			matchIsFinished: match.matchIsFinished,
-			matchResults: match.matchResults.map((result: any) => ({
+			matchResults: match.matchResults?.map((result: any) => ({
 				resultId: result.resultID,
 				resultName: result.resultName,
 				pointsTeam1: result.pointsTeam1,
@@ -46,9 +49,9 @@ function transformMatches(matches: any[]): Match[] {
 				resultOrderId: result.resultOrderID,
 				resultTypeId: result.resultTypeID,
 				resultDescription: result.resultDescription,
-			})),
+			})) ?? [],
 			winner: calculateResult(match.matchResults),
-			goals: match.goals.map((goal: any) => ({
+			goals: match.goals?.map((goal: any) => ({
 				goalId: goal.goalID,
 				scoreTeam1: goal.scoreTeam1,
 				scoreTeam2: goal.scoreTeam2,
@@ -59,14 +62,38 @@ function transformMatches(matches: any[]): Match[] {
 				isOwnGoal: goal.isOwnGoal,
 				isOvertime: goal.isOvertime,
 				comment: goal.comment,
-			})),
+			})) ?? [],
 			location: match.location,
 			numberOfViewers: match.numberOfViewers,
 		};
-
+		// console.log(newMatch);
 		newMatches.push(newMatch);
 	});
 	return newMatches;
+}
+
+function excludeRelegationMatches(
+	matches: any[],
+	config: LeagueConfig,
+): any[] {
+	// return matches.filter((match) => {
+	// 	const groupName = match.group.groupName;
+	// 	for (let i = 1; i <= (config.size - 1) * 2; i++) {
+	// 		if (groupName === `${i}. Spieltag`) {
+	// 			return false;
+	// 		}
+	// 	}
+	// 	return true;
+	// });
+	const tempMatches: any[] = [];
+	matches.forEach((match) => {
+		if (!match.group.groupName.includes("Spieltag")) {
+			// console.log(`Excluding match: ${match.matchID} - ${match.group.groupName}`);
+		} else {
+			tempMatches.push(match);
+		}
+	});
+	return tempMatches;
 }
 
 function calculateResult(
@@ -74,10 +101,7 @@ function calculateResult(
 ): "team1" | "team2" | "draw" | null {
 	if (matchResults.length === 0) return null;
 
-	const highestOrderId = Math.max(
-		...matchResults.map((r) => r.resultOrderID),
-	);
-	const result = matchResults.find((r) => r.resultOrderID === highestOrderId);
+	const result = matchResults.find((r) => r.resultName === "Endergebnis");
 	if (!result) return null;
 	if (result.pointsTeam1 > result.pointsTeam2) {
 		return "team1";
@@ -88,7 +112,10 @@ function calculateResult(
 	}
 }
 
-function groupMatchesByMatchday(matches: Match[]): Matchday[] {
+function groupMatchesByMatchday(
+	matches: Match[],
+	seasonStartYear: number,
+): Matchday[] {
 	const maxMatchdayNumber = Math.max(
 		...matches.map((match) => match.matchday.number),
 	);
@@ -97,7 +124,6 @@ function groupMatchesByMatchday(matches: Match[]): Matchday[] {
 	let previousTable: LeagueTable | null = null;
 
 	for (let index = 1; index <= maxMatchdayNumber; index++) {
-
 		const indexMatches = matches.filter((match) =>
 			match.matchday.number === index
 		);
@@ -110,9 +136,13 @@ function groupMatchesByMatchday(matches: Match[]): Matchday[] {
 		matchDays.push({
 			matchdayNumber: index,
 			matches: indexMatches,
-			isFinished: checkAllPlayed(indexMatches),
+			isFinished: checkAllPlayed(indexMatches, seasonStartYear),
 			table: previousTable,
 		});
+	}
+
+	if (seasonStartYear < 2003) {
+		console.log(matchDays);
 	}
 
 	return matchDays;
@@ -181,6 +211,7 @@ function calculateTable(
 			tempTeam1Entry.team.matchesPlayed++;
 			tempTeam2Entry.team.matchesPlayed++;
 
+			if (result) {
 			tempTeam1Entry.team.goalsFor += result.pointsTeam1;
 			tempTeam1Entry.team.goalsAgainst += result.pointsTeam2;
 			tempTeam1Entry.team.goalDifference += result.pointsTeam1 -
@@ -190,6 +221,7 @@ function calculateTable(
 			tempTeam2Entry.team.goalsAgainst += result.pointsTeam1;
 			tempTeam2Entry.team.goalDifference += result.pointsTeam2 -
 				result.pointsTeam1;
+			}
 
 			switch (match.winner) {
 				case "team1":
@@ -326,22 +358,26 @@ function calculatePositionChange(
 	});
 }
 
-async function processData(config: LeagueConfig) {
-	const data = await fetchData(config.externalURL);
+async function processData(config: LeagueConfig, seasonStartYear: number) {
+	// const data = await fetchData(config.externalURL + "2024");
+	const data = await fetchData(
+		config.externalURL + seasonStartYear.toString(),
+	);
 
-	// if (isLoading) return { newData: null, error: true, isLoading: true };
-	// if (error) return { newData: null, error: true, isLoading: false };
+	const tempMatches = excludeRelegationMatches(data, config);
 
-	// let newData = data;
+	const matches = transformMatches(tempMatches);
 
-	const matches = transformMatches(data);
-
-	let newData: LeagueData = {
+	// if (seasonStartYear === 2024) {
+	// 	console.log(tempMatches[tempMatches.length - 1].group.groupName);
+	// }
+	
+	let newData: SeasonData = {
 		config: config,
-		season: data[0].leagueSeason,
-		matchdays: groupMatchesByMatchday(matches),
+		season: seasonStartYear,
+		matchdays: groupMatchesByMatchday(matches, seasonStartYear),
 		allMatches: matches,
-		isComplete: checkAllPlayed(matches),
+		isComplete: checkAllPlayed(matches, seasonStartYear),
 	};
 
 	return newData;

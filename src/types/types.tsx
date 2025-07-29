@@ -82,6 +82,7 @@ export interface LeagueConfig {
   relup: number; // relegation playoff promotion spots
   reldown: number; // relegation playoff relegation spots
   down: number; // direct relegation spots
+  startYear: number;
 }
 
 // Country/Federation grouping
@@ -92,9 +93,9 @@ export interface Country {
 }
 
 // Complete league data with matches
-export interface LeagueData {
+export interface SeasonData {
   config: LeagueConfig;
-  season: string;
+  season: number;
   matchdays: Matchday[];
   allMatches: Match[]; // Flat array of all matches for easy filtering
   // lastUpdated: string;
