@@ -1,6 +1,6 @@
 import { processData } from "@/src/lib/processData";
 import countries from "@/src/lib/leagues";
-import Table from "@/src/components/table";
+import LeagueComponent from "@/src/components/league";
 
 export const dynamic = "force-static";
 
@@ -22,7 +22,9 @@ export async function generateStaticParams() {
   return allParams;
 }
 
-async function League(props: { params: Promise<{ country: string; league: string }> }) {
+async function League(
+  props: { params: Promise<{ country: string; league: string }> },
+) {
   const params = await props.params;
 
   const countryIndex = countries.findIndex((c) =>
@@ -31,7 +33,6 @@ async function League(props: { params: Promise<{ country: string; league: string
   const leagueIndex = countries[countryIndex]?.leagues.findIndex((l) =>
     l.internalURL === params.league
   );
-
 
   const data = [];
 
@@ -52,11 +53,9 @@ async function League(props: { params: Promise<{ country: string; league: string
     }
   }
 
-  // console.log(data[0].matchdays[0].table);
-
   return (
     <>
-      <Table processedData={data[0].matchdays[0].table} />
+      <LeagueComponent data={data} />
     </>
   );
 }
