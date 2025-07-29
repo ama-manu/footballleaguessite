@@ -1,5 +1,6 @@
-import { processData } from "../../../lib/processData";
-import countries from "../../../lib/leagues";
+import { processData } from "@/src/lib/processData";
+import countries from "@/src/lib/leagues";
+import Table from "@/src/components/table";
 
 export const dynamic = "force-static";
 
@@ -51,14 +52,11 @@ async function League(props: { params: Promise<{ country: string; league: string
     }
   }
 
-  // const data = await processData(
-  //   countries[countryIndex]?.leagues[leagueIndex],
-  //   params.season,
-  // );
+  // console.log(data[0].matchdays[0].table);
+
   return (
     <>
-      <p>{params.country}</p>
-      <p>{params.league}</p>
+      <Table processedData={data[0].matchdays[0].table} />
     </>
   );
 }
