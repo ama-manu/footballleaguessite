@@ -1,13 +1,24 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
-function DropdownMenu() {
+type DropdownType = "season" | "matchday";
+
+interface DropdownMenuProps {
+	type: DropdownType;
+	defaultVal: number;
+	data: number[];
+	setfunction?: (value: number) => void; // Optional function to handle selection
+}
+
+function DropdownMenu({ type, defaultVal, data, setfunction }: DropdownMenuProps) {
 	return (
 		<Menu>
-			<MenuButton>Dropdown</MenuButton>
+			<MenuButton>{type}</MenuButton>
 			<MenuItems>
-				<MenuItem>
-					<div>Item 1</div>
-				</MenuItem>
+				{data.map((item) => (
+					<MenuItem key={item}>
+						<button onClick={() => setfunction && (type === "matchday" ? setfunction(item - 1) : setfunction(item))}>{item}</button>
+					</MenuItem>
+				))}
 			</MenuItems>
 		</Menu>
 	);
