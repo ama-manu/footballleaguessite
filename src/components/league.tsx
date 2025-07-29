@@ -16,6 +16,13 @@ function LeagueComponent({ data }: { data: SeasonData[] }) {
 			</button>
 			<button onClick={() => setSeason(season + 1)} disabled={!data.find(d => d.season === season + 1)}>Next Season</button>
 			<div>{season}</div>
+			<button onClick={() => setMatchday(prev => prev - 1)} disabled={matchday === 0}>
+				Previous Matchday
+			</button>
+			<button onClick={() => setMatchday(prev => prev + 1)} disabled={matchday === maxMatchday}>
+				Next Matchday
+			</button>
+			<div>Matchday: {matchday + 1}</div>
 			<Table 
 				key={`${season}-${matchday}`} 
 				processedData={currentSeasonData?.matchdays[matchday]?.table || []} 
