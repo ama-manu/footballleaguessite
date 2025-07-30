@@ -354,11 +354,9 @@ function calculatePositionChange(
 	});
 }
 
-async function processData(config: LeagueConfig, seasonStartYear: number) {
+function processData(data: any[], config: LeagueConfig, seasonStartYear: number): SeasonData {
 	// const data = await fetchData(config.externalURL + "2024");
-	const data = await fetchData(
-		config.externalURL + seasonStartYear.toString(),
-	);
+	
 
 	const tempMatches = excludeRelegationMatches(data, config);
 
