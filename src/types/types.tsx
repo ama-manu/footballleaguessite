@@ -57,7 +57,7 @@ export interface Match {
 // Matchday structure - groups matches by matchday/round
 export interface Matchday {
   matchdayNumber: number;
-  matches: Match[];
+  // matches: Match[];
   isFinished: boolean;
   table: LeagueTable;
   //   startDate?: string;
@@ -97,7 +97,7 @@ export interface SeasonData {
   config: LeagueConfig;
   season: number;
   matchdays: Matchday[];
-  allMatches: Match[]; // Flat array of all matches for easy filtering
+  // allMatches: Match[]; // Flat array of all matches for easy filtering
   // lastUpdated: string;
   isComplete: boolean;
 }
