@@ -4,11 +4,21 @@ import { SeasonData } from "@/src/types/types";
 import { useState } from "react";
 import DropdownMenu from "./dropdownmenu";
 
-function LeagueComponent({ data }: { data: SeasonData[] }) {
-	const [season, setSeason] = useState(
-		data.findLast((d) => d.matchdays.find((m) => m.isFinished))?.season ||
-			new Date().getFullYear() - 1,
-	);
+function LeagueComponent(
+	{ data, currentMatchday }: { data: SeasonData[]; currentMatchday: any },
+) {
+	// const [season, setSeason] = useState(
+	// 	data.findLast((d) => d.matchdays.find((m) => m.isFinished))?.season ||
+	// 		new Date().getFullYear() - 1,
+	// );
+
+	const [season, setSeason] = useState(() => {
+		if (currentMatchday.groupName === "1. Spieltag") {
+			return data[data.length - 1].season;
+		} else {
+			return data[data.length - 2].season;
+		}
+	});
 
 	const currentSeasonData = data.find((d) => d.season === season);
 	const [matchday, setMatchday] = useState(
