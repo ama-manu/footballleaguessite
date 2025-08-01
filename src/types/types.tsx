@@ -68,8 +68,8 @@ export interface Matchday {
 export interface LeagueConfig {
   name: string;
   topLeague: boolean;
-  internalURL: string;
-  externalURL: string;
+  shortcut: string;
+  dbUrl: string;
   logoURL: string;
   wordmarkURL: string;
   size: number; // number of teams

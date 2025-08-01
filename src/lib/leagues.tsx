@@ -8,8 +8,8 @@ const countries: Country[] = [
             {
                 name: '1. Bundesliga',
                 topLeague: true,
-                internalURL: 'bl1',
-                externalURL: 'https://api.openligadb.de/getmatchdata/bl1/',
+                shortcut: 'bl1',
+                dbUrl: 'https://api.openligadb.de/',
                 logoURL: 'https://www.bundesliga.com/assets/logo/bundesliga_pos.svg',
                 wordmarkURL: 'https://upload.wikimedia.org/wikipedia/commons/1/15/Bundesliga_logo.svg',
                 size: 18,
@@ -25,8 +25,8 @@ const countries: Country[] = [
             {
                 name: '2. Bundesliga',
                 topLeague: false,
-                internalURL: 'bl2',
-                externalURL: 'https://api.openligadb.de/getmatchdata/bl2/',
+                shortcut: 'bl2',
+                dbUrl: 'https://api.openligadb.de/',
                 logoURL: 'https://www.bundesliga.com/assets/logo/2bundesliga_pos.svg',
                 wordmarkURL: 'https://upload.wikimedia.org/wikipedia/commons/5/58/2._Bundesliga_Wordmark.svg',
                 size: 18,
@@ -42,8 +42,8 @@ const countries: Country[] = [
             {
                 name: '3. Liga',
                 topLeague: false,
-                internalURL: 'bl3',
-                externalURL: 'https://api.openligadb.de/getmatchdata/bl3/',
+                shortcut: 'bl3',
+                dbUrl: 'https://api.openligadb.de/',
                 logoURL: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/3._Liga_Wordmark.svg',
                 wordmarkURL: 'https://upload.wikimedia.org/wikipedia/commons/e/ec/3._Liga_Wordmark.svg',
                 size: 20,
