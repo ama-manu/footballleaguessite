@@ -1,4 +1,3 @@
-import fetchData from "./fetchData";
 import {
 	LeagueConfig,
 	LeagueTable,
