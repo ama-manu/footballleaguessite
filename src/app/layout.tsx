@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import countries from "@/src/lib/leagues";
+import Link from 'next/link'
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,8 +26,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="de">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <div>
+          <Link href="/">FLS</Link>
+          <div>
+            <Menu>
+              <MenuButton>Menu</MenuButton>
+              <MenuItems>
+                {countries.map((country) => (
+                  country.leagues.map((league) => 
+                    <MenuItem key={league.name}>
+                      {/* <div>{league.name}</div> */}
+                      <Link href={`/${country.internalURL}/${league.shortcut}`}>{league.name}</Link>
+                    </MenuItem>
+                  )
+                ))}
+              </MenuItems>
+            </Menu>
+          </div>
+        </div>
         {children}
       </body>
     </html>
