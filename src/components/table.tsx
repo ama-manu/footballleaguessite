@@ -88,8 +88,6 @@ function LeagueTableComponent({ processedData }: { processedData: LeagueTable })
 		getCoreRowModel: getCoreRowModel(),
 	});
 
-	// console.log(data);
-
 	return (
 		<div>
 			<table>

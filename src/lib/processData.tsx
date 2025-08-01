@@ -1,4 +1,3 @@
-import fetchData from "./fetchData";
 import {
 	LeagueConfig,
 	LeagueTable,
@@ -135,7 +134,7 @@ function groupMatchesByMatchday(
 
 		matchDays.push({
 			matchdayNumber: index,
-			matches: indexMatches,
+			// matches: indexMatches,
 			isFinished: checkAllPlayed(indexMatches, seasonStartYear),
 			table: previousTable,
 		});
@@ -354,11 +353,9 @@ function calculatePositionChange(
 	});
 }
 
-async function processData(config: LeagueConfig, seasonStartYear: number) {
+function processData(data: any[], config: LeagueConfig, seasonStartYear: number): SeasonData {
 	// const data = await fetchData(config.externalURL + "2024");
-	const data = await fetchData(
-		config.externalURL + seasonStartYear.toString(),
-	);
+	
 
 	const tempMatches = excludeRelegationMatches(data, config);
 
@@ -372,7 +369,7 @@ async function processData(config: LeagueConfig, seasonStartYear: number) {
 		config: config,
 		season: seasonStartYear,
 		matchdays: groupMatchesByMatchday(matches, seasonStartYear),
-		allMatches: matches,
+		// allMatches: matches,
 		isComplete: checkAllPlayed(matches, seasonStartYear),
 	};
 

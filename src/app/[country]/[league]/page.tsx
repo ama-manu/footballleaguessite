@@ -1,6 +1,7 @@
 import { processData } from "@/src/lib/processData";
 import countries from "@/src/lib/leagues";
 import LeagueComponent from "@/src/components/league";
+import { SeasonData } from "@/src/types/types";
 
 export const dynamic = "force-static";
 
@@ -22,20 +23,9 @@ export async function generateStaticParams() {
   return allParams;
 }
 
-async function League(
-  props: { params: Promise<{ country: string; league: string }> },
-) {
-  const params = await props.params;
-
-  const countryIndex = countries.findIndex((c) =>
-    c.internalURL === params.country
-  );
-  const leagueIndex = countries[countryIndex]?.leagues.findIndex((l) =>
-    l.internalURL === params.league
-  );
-
-  const data = [];
-
+async function getLeagueData(params: { country: string; league: string }) {
+  const data: SeasonData[] = [];
+  
   for (const tempCountry of countries) {
     if (tempCountry.internalURL === params.country) {
       for (const tempLeague of tempCountry.leagues) {
@@ -45,13 +35,28 @@ async function League(
             season < new Date().getFullYear();
             season++
           ) {
-            const leagueData = await processData(tempLeague, season);
+            const tempData = await fetch(
+              tempLeague.externalURL + season.toString(),
+            );
+            // console.log(`Fetching data for ${tempLeague.name} - Season ${season}`);
+            
+            const jsonData = await tempData.json();
+            const leagueData = processData(jsonData, tempLeague, season);
             data.push(leagueData);
           }
         }
       }
     }
   }
+  return data;
+}
+
+async function League(
+  props: { params: Promise<{ country: string; league: string }> },
+) {
+  const params = await props.params;
+
+  const data: SeasonData[] = await getLeagueData(params);
 
   return (
     <>
