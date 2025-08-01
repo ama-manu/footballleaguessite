@@ -11,8 +11,8 @@ export default function Home() {
       <ul>
         {Leagues.map((country) => (
           country.leagues.map((league) => (
-            <li key={`${country.internalURL}-${league.internalURL}`}>
-              <a href={`/${country.internalURL}/${league.internalURL}`}>
+            <li key={`${country.internalURL}-${league.shortcut}`}>
+              <a href={`/${country.internalURL}/${league.shortcut}`}>
                 {country.name} - {league.name}
               </a>
             </li>
