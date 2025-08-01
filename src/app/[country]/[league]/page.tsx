@@ -14,7 +14,7 @@ export async function generateStaticParams() {
       for (let season = league.startYear; season < currentYear; season++) {
         allParams.push({
           country: country.internalURL,
-          league: league.internalURL,
+          league: league.shortcut,
           season: season,
         });
       }
@@ -29,14 +29,14 @@ async function getLeagueData(params: { country: string; league: string }) {
   for (const tempCountry of countries) {
     if (tempCountry.internalURL === params.country) {
       for (const tempLeague of tempCountry.leagues) {
-        if (tempLeague.internalURL === params.league) {
+        if (tempLeague.shortcut === params.league) {
           for (
             let season = tempLeague.startYear;
-            season < new Date().getFullYear();
+            season <= new Date().getFullYear();
             season++
           ) {
             const tempData = await fetch(
-              tempLeague.externalURL + season.toString(),
+              tempLeague.dbUrl + 'getmatchdata/' + tempLeague.shortcut + '/' + season.toString(),
             );
             // console.log(`Fetching data for ${tempLeague.name} - Season ${season}`);
             
@@ -51,6 +51,15 @@ async function getLeagueData(params: { country: string; league: string }) {
   return data;
 }
 
+async function getCurrentMatchday(params: { country: string; league: string }) {
+    let currentMatchday = await fetch(countries.find((country) => country.internalURL === params.country)?.leagues.find(
+    (league) => league.shortcut === params.league
+  )?.dbUrl + 'getcurrentgroup/' + params.league);
+
+  currentMatchday = await currentMatchday.json();
+  return currentMatchday;
+}
+
 async function League(
   props: { params: Promise<{ country: string; league: string }> },
 ) {
@@ -58,9 +67,11 @@ async function League(
 
   const data: SeasonData[] = await getLeagueData(params);
 
+  const currentMatchday = await getCurrentMatchday(params);
+
   return (
     <>
-      <LeagueComponent data={data} />
+      <LeagueComponent data={data} currentMatchday={currentMatchday} />
     </>
   );
 }
