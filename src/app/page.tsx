@@ -8,17 +8,6 @@ export default function Home() {
         This is the home page. Navigate to a specific league to see more
         details.
       </p>
-      <ul>
-        {Leagues.map((country) => (
-          country.leagues.map((league) => (
-            <li key={`${country.internalURL}-${league.shortcut}`}>
-              <a href={`/${country.internalURL}/${league.shortcut}`}>
-                {country.name} - {league.name}
-              </a>
-            </li>
-          ))
-        ))}
-      </ul>
     </main>
   );
 }
