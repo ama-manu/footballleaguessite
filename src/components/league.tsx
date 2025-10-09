@@ -12,11 +12,20 @@ function LeagueComponent(
 	// 		new Date().getFullYear() - 1,
 	// );
 
+	// if current season is incomplete but matchday is still at 34 then show last season
+	// else show current season
+	// matchday should advance halfway between matchdays 
+
 	const [season, setSeason] = useState(() => {
-		if (currentMatchday.groupName === "1. Spieltag") {
-			return data[data.length - 1].season;
+		if (data.length < 2) return data[0].season;
+		if (!(data[data.length - 1].isComplete) && data[data.length - 2].isComplete) {
+			if (currentMatchday.groupOrderID === 34) {
+				return data[data.length - 2].season;
+			} else {
+				return data[data.length - 1].season;
+			}
 		} else {
-			return data[data.length - 2].season;
+			return data[data.length - 1].season;
 		}
 	});
 
