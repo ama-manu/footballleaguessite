@@ -1,12 +1,15 @@
+@use "../styles/mixins";
+@use "../styles/variables" as vars;
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #{vars.$background-light};
+  --foreground: #{vars.$foreground-light};
 }
 
-@media (prefers-color-scheme: dark) {
+@include mixins.dark-mode {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #{vars.$background-dark};
+    --foreground: #{vars.$foreground-dark};
   }
 }
 
@@ -35,7 +38,7 @@ a {
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
+@include mixins.dark-mode {
   html {
     color-scheme: dark;
   }
