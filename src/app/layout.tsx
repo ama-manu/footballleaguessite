@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.scss";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import countries from "@/src/lib/leagues";
 import Link from 'next/link'
